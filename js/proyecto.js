@@ -2430,12 +2430,12 @@ document.getElementById("modalConfirmar")?.addEventListener("click", async () =>
     mOv.classList.remove("open");
 
     if (d.ok) {
-      PROYECTO_ID     = d.proyecto_id;  // guardar ID para futuras actualizaciones
+      PROYECTO_ID     = d.proyecto_id;  
       PROYECTO_NOMBRE = nombre;
-      // Actualizar título del header con nombre del proyecto
+     
       const hTag = document.querySelector(".header-tag");
       if (hTag) hTag.textContent = `// ${nombre}`;
-      // Mostrar badge "guardado" en el botón
+      
       const btnG = document.getElementById("btnGuardar");
       if (btnG) { btnG.title = `Proyecto guardado: ${nombre}`; }
       toast("✓ " + d.mensaje, "success");
