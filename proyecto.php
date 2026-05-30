@@ -584,6 +584,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['archivo'])) {
 .cot-notas-list li { font-size: 10px; color: #475569; line-height: 1.6; }
 
 </style>
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/proyecto_mejoras.css">
 </head>
 <body>
 
@@ -1532,6 +1534,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['archivo'])) {
 </div>
 
 <script src="js/proyecto.js?v=9"></script>
+    <script src="js/visor_animacion.js" defer></script>
+    <script src="js/canvas_mejoras.js" defer></script>
 <?php if ($proyectoCargado): ?>
 <script>
 /* ═══════════════════════════════════════════════════════
@@ -1632,7 +1636,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['archivo'])) {
 </script>
 <?php endif; ?>
 
-<script src="js/fylcad_ai_widget.js" data-pagina="proyecto"></script>
 
+    <!-- Chatbot FYLCAD -->
+    <link rel="stylesheet" href="css/chatbot.css">
+    <script src="js/chatbot.js" defer></script>
 </body>
 </html>

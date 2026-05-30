@@ -137,6 +137,7 @@ function fmtFecha($f) { return date('d/m/Y', strtotime($f)); }
     .confirm-delete { background:#ef4444;color:#fff; }
     .confirm-delete:hover { background:#dc2626;box-shadow:0 0 16px rgba(239,68,68,.3); }
     </style>
+    <link rel="stylesheet" href="css/responsive.css">
 </head>
 <body>
 
@@ -163,6 +164,7 @@ function fmtFecha($f) { return date('d/m/Y', strtotime($f)); }
             </span>
         </div>
         <div class="topbar-right">
+            <a href="dashboard.php" style="font-size:12px;padding:8px 14px;text-decoration:none;border:1px solid rgba(255,255,255,0.08);border-radius:7px;color:#64748b;transition:all .2s;display:inline-flex;align-items:center;gap:5px;">← Dashboard</a>
             <div class="topbar-plan <?= $usuarioPlan ?>">
                 <?= $usuarioPlan === 'premium' ? '★ Premium' : '◈ Free' ?>
             </div>
@@ -324,6 +326,8 @@ modal?.addEventListener("click", e => { if (e.target === modal) modal.classList.
 </script>
 
 
-<script src="js/fylcad_ai_widget.js" data-pagina="mis_proyectos"></script>
+    <!-- Chatbot FYLCAD -->
+    <link rel="stylesheet" href="css/chatbot.css">
+    <script src="js/chatbot.js" defer></script>
 </body>
 </html>

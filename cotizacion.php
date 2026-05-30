@@ -724,6 +724,8 @@ textarea.inp{resize:vertical;min-height:48px;font-size:10px;line-height:1.6;}
 .sim-nozone-ico{font-size:48px;opacity:.3;}
 .sim-nozone-txt{font:400 13px var(--font);text-align:center;line-height:1.7;opacity:.6;}
 </style>
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/cotizacion_mejoras.css">
 </head>
 <body>
 <div class="app">
@@ -3314,5 +3316,8 @@ renderMats();
 })();
 
 </script>
+    <!-- Chatbot FYLCAD -->
+    <link rel="stylesheet" href="css/chatbot.css">
+    <script src="js/chatbot.js" defer></script>
 </body>
 </html>

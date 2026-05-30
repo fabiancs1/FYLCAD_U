@@ -68,6 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/auth.css">
+    <link rel="stylesheet" href="css/responsive.css">
 </head>
 <body>
 
@@ -266,5 +267,8 @@ document.querySelectorAll(".plan-option").forEach(opt => {
 });
 </script>
 
+    <!-- Chatbot FYLCAD -->
+    <link rel="stylesheet" href="css/chatbot.css">
+    <script src="js/chatbot.js" defer></script>
 </body>
 </html>

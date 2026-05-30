@@ -814,6 +814,7 @@ body {
 }
 
     </style>
+    <link rel="stylesheet" href="css/responsive.css">
 </head>
 <body>
 
@@ -1094,6 +1095,11 @@ body {
 </script>
 
 
-<script src="js/fylcad_ai_widget.js" data-pagina="dashboard"></script>
+    <!-- Chatbot FYLCAD -->
+    <link rel="stylesheet" href="css/chatbot.css">
+    <script src="js/chatbot.js" defer></script>
+    <!-- Animaciones Dashboard -->
+    <link rel="stylesheet" href="css/dashboard_animaciones.css">
+    <script src="js/dashboard_animaciones.js" defer></script>
 </body>
 </html>

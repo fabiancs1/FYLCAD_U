@@ -760,6 +760,7 @@ $xpPct = $xpSig > 0 ? min(100, round(($xp - $nivelActual[2]) / ($xpSig - $nivelA
       .topo-logros-grid { grid-template-columns: repeat(2,1fr); }
     }
     </style>
+    <link rel="stylesheet" href="css/responsive.css">
 </head>
 <body>
 
@@ -1964,6 +1965,9 @@ $xpPct = $xpSig > 0 ? min(100, round(($xp - $nivelActual[2]) / ($xpSig - $nivelA
 })();
 </script>
 
-<script src="js/fylcad_ai_widget.js" data-pagina="perfil"></script>
+    <script src="js/canvas_mejoras.js" defer></script>
+    <!-- Chatbot FYLCAD -->
+    <link rel="stylesheet" href="css/chatbot.css">
+    <script src="js/chatbot.js" defer></script>
 </body>
 </html>

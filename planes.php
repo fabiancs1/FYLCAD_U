@@ -18,6 +18,7 @@ $nombreUsuario = $_SESSION['usuario_nombre'] ?? null;
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/planes.css">
+    <link rel="stylesheet" href="css/responsive.css">
 </head>
 <body>
 
@@ -407,6 +408,8 @@ document.querySelectorAll(".faq-q").forEach(btn => {
 </script>
 
 
-<script src="js/fylcad_ai_widget.js" data-pagina="planes"></script>
+    <!-- Chatbot FYLCAD -->
+    <link rel="stylesheet" href="css/chatbot.css">
+    <script src="js/chatbot.js" defer></script>
 </body>
 </html>
