@@ -1,5 +1,12 @@
 <?php
 /**
+ * FYLCAD — Plataforma de Topografía Digital
+ * Copyright (c) 2026 Fabian Eduardo Rodriguez Hernandez
+ * Todos los derechos reservados.
+ * Uso no autorizado prohibido.
+ */
+
+/**
  * FYLCAD — Cliente SOAP con descubrimiento UDDI
  * Archivo: soap_client.php
  * Guía 9 — Actividades 2 y 3

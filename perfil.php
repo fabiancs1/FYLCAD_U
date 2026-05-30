@@ -1,4 +1,11 @@
 <?php
+/**
+ * FYLCAD — Plataforma de Topografía Digital
+ * Copyright (c) 2026 Fabian Eduardo Rodriguez Hernandez
+ * Todos los derechos reservados.
+ * Uso no autorizado prohibido.
+ */
+
 /* =============================================
    FYLCAD — Mi Perfil (v2)
 ============================================= */
@@ -761,6 +768,7 @@ $xpPct = $xpSig > 0 ? min(100, round(($xp - $nivelActual[2]) / ($xpSig - $nivelA
     }
     </style>
     <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/global_mejoras.css">
 </head>
 <body>
 

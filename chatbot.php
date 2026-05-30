@@ -1,5 +1,12 @@
 <?php
 /**
+ * FYLCAD — Plataforma de Topografía Digital
+ * Copyright (c) 2026 Fabian Eduardo Rodriguez Hernandez
+ * Todos los derechos reservados.
+ * Uso no autorizado prohibido.
+ */
+
+/**
  * FYLCAD — Chatbot de Respuestas Predefinidas
  * Archivo: chatbot.php
  * Ubicación: C:\xamppp\htdocs\FYLCAD\chatbot.php

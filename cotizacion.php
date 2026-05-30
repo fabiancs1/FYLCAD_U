@@ -1,4 +1,11 @@
 <?php
+/**
+ * FYLCAD — Plataforma de Topografía Digital
+ * Copyright (c) 2026 Fabian Eduardo Rodriguez Hernandez
+ * Todos los derechos reservados.
+ * Uso no autorizado prohibido.
+ */
+
 /* ============================================================
    FYLCAD — Módulo de Cotización v3
    cotizacion.php
@@ -726,6 +733,7 @@ textarea.inp{resize:vertical;min-height:48px;font-size:10px;line-height:1.6;}
 </style>
     <link rel="stylesheet" href="css/responsive.css">
     <link rel="stylesheet" href="css/cotizacion_mejoras.css">
+    <link rel="stylesheet" href="css/global_mejoras.css">
 </head>
 <body>
 <div class="app">

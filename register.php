@@ -1,4 +1,11 @@
 <?php
+/**
+ * FYLCAD — Plataforma de Topografía Digital
+ * Copyright (c) 2026 Fabian Eduardo Rodriguez Hernandez
+ * Todos los derechos reservados.
+ * Uso no autorizado prohibido.
+ */
+
 /* =============================================
    FYLCAD — Registro de usuario
    Archivo: register.php
@@ -69,6 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/auth.css">
     <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/global_mejoras.css">
 </head>
 <body>
 

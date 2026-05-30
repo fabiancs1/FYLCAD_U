@@ -11,8 +11,8 @@
 // ── Base de datos ──────────────────────────
 define('DB_HOST',    'localhost');
 define('DB_NAME',    'fylcad_db');
-define('DB_USER',    'root');   // ← CAMBIAR
-define('DB_PASS',    '');      // ← CAMBIAR
+define('DB_USER',    'tu_usuario_mysql');   // ← CAMBIAR
+define('DB_PASS',    'tu_contraseña');      // ← CAMBIAR
 define('DB_CHARSET', 'utf8mb4');
 
 // ── Entorno ────────────────────────────────

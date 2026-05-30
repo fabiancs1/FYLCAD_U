@@ -1,5 +1,12 @@
 <?php
 /**
+ * FYLCAD — Plataforma de Topografía Digital
+ * Copyright (c) 2026 Fabian Eduardo Rodriguez Hernandez
+ * Todos los derechos reservados.
+ * Uso no autorizado prohibido.
+ */
+
+/**
  * FYLCAD — Cliente de Sockets con Lookup al Registry
  * Archivo: socket_client.php
  *

@@ -1,4 +1,11 @@
 <?php
+/**
+ * FYLCAD — Plataforma de Topografía Digital
+ * Copyright (c) 2026 Fabian Eduardo Rodriguez Hernandez
+ * Todos los derechos reservados.
+ * Uso no autorizado prohibido.
+ */
+
 /* =============================================
    FYLCAD — Mis Proyectos
    Archivo: mis_proyectos.php
@@ -138,6 +145,7 @@ function fmtFecha($f) { return date('d/m/Y', strtotime($f)); }
     .confirm-delete:hover { background:#dc2626;box-shadow:0 0 16px rgba(239,68,68,.3); }
     </style>
     <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/global_mejoras.css">
 </head>
 <body>
 

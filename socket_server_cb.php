@@ -1,5 +1,12 @@
 <?php
 /**
+ * FYLCAD — Plataforma de Topografía Digital
+ * Copyright (c) 2026 Fabian Eduardo Rodriguez Hernandez
+ * Todos los derechos reservados.
+ * Uso no autorizado prohibido.
+ */
+
+/**
  * FYLCAD — Servidor con Remote Callbacks
  * Archivo: socket_server_cb.php
  * Guía 7 — Actividad 1: Remote Callbacks

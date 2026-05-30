@@ -1,4 +1,11 @@
 <?php
+/**
+ * FYLCAD — Plataforma de Topografía Digital
+ * Copyright (c) 2026 Fabian Eduardo Rodriguez Hernandez
+ * Todos los derechos reservados.
+ * Uso no autorizado prohibido.
+ */
+
 /* =============================================
    FYLCAD — Dashboard v2 (Bento Layout)
 ============================================= */
@@ -815,6 +822,7 @@ body {
 
     </style>
     <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/global_mejoras.css">
 </head>
 <body>
 
