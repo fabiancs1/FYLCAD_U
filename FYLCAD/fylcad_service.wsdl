@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    FYLCAD — Contrato de Servicio WSDL
+    Archivo: fylcad_service.wsdl
+    Guía 9 — Actividad 1: Definición del Contrato
+
+    Define formalmente las operaciones, mensajes y
+    protocolo de comunicación del servicio FYLCAD.
+    Cualquier cliente puede consumir el servicio
+    leyendo este contrato sin acceder al código.
+-->
+<definitions name="FylcadService"
+    targetNamespace="http://fylcad.com/service"
+    xmlns="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:tns="http://fylcad.com/service"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+    <!-- ═══════════════════════════════════════════
+         TYPES: Tipos de datos del sistema
+    ═══════════════════════════════════════════ -->
+    <types>
+        <xsd:schema targetNamespace="http://fylcad.com/service">
+
+            <!-- Punto topográfico -->
+            <xsd:complexType name="PuntoTopografico">
+                <xsd:sequence>
+                    <xsd:element name="x" type="xsd:decimal"/>
+                    <xsd:element name="y" type="xsd:decimal"/>
+                    <xsd:element name="z" type="xsd:decimal"/>
+                </xsd:sequence>
+                <xsd:attribute name="id" type="xsd:integer"/>
+            </xsd:complexType>
+
+            <!-- Lista de puntos -->
+            <xsd:complexType name="ListaPuntos">
+                <xsd:sequence>
+                    <xsd:element name="punto"
+                        type="tns:PuntoTopografico"
+                        minOccurs="3"
+                        maxOccurs="unbounded"/>
+                </xsd:sequence>
+            </xsd:complexType>
+
+            <!-- Request: calcular métricas -->
+            <xsd:element name="CalcularRequest">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="proyecto_id" type="xsd:string"/>
+                        <xsd:element name="puntos"      type="tns:ListaPuntos"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+            <!-- Response: resultado del cálculo -->
+            <xsd:element name="CalcularResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="estado"         type="xsd:string"/>
+                        <xsd:element name="total_puntos"   type="xsd:integer"/>
+                        <xsd:element name="area_m2"        type="xsd:decimal"/>
+                        <xsd:element name="volumen_m3"     type="xsd:decimal"/>
+                        <xsd:element name="cota_min"       type="xsd:decimal"/>
+                        <xsd:element name="cota_max"       type="xsd:decimal"/>
+                        <xsd:element name="desnivel"       type="xsd:decimal"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+            <!-- Request: ping -->
+            <xsd:element name="PingRequest">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="origen" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+            <!-- Response: ping -->
+            <xsd:element name="PingResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="estado"  type="xsd:string"/>
+                        <xsd:element name="mensaje" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+        </xsd:schema>
+    </types>
+
+    <!-- ═══════════════════════════════════════════
+         MESSAGES: Mensajes de entrada y salida
+    ═══════════════════════════════════════════ -->
+
+    <!-- Ping -->
+    <message name="PingInput">
+        <part name="parameters" element="tns:PingRequest"/>
+    </message>
+    <message name="PingOutput">
+        <part name="parameters" element="tns:PingResponse"/>
+    </message>
+
+    <!-- Calcular -->
+    <message name="CalcularInput">
+        <part name="parameters" element="tns:CalcularRequest"/>
+    </message>
+    <message name="CalcularOutput">
+        <part name="parameters" element="tns:CalcularResponse"/>
+    </message>
+
+    <!-- ═══════════════════════════════════════════
+         PORT TYPE: Operaciones disponibles
+    ═══════════════════════════════════════════ -->
+    <portType name="FylcadPortType">
+
+        <operation name="ping">
+            <documentation>
+                Verifica que el servicio FYLCAD está activo.
+            </documentation>
+            <input  message="tns:PingInput"/>
+            <output message="tns:PingOutput"/>
+        </operation>
+
+        <operation name="calcularMetricas">
+            <documentation>
+                Recibe una lista de puntos topográficos X,Y,Z
+                y retorna área, volumen, desnivel y cotas.
+            </documentation>
+            <input  message="tns:CalcularInput"/>
+            <output message="tns:CalcularOutput"/>
+        </operation>
+
+    </portType>
+
+    <!-- ═══════════════════════════════════════════
+         BINDING: Protocolo SOAP sobre HTTP
+    ═══════════════════════════════════════════ -->
+    <binding name="FylcadBinding" type="tns:FylcadPortType">
+        <soap:binding style="document"
+            transport="http://schemas.xmlsoap.org/soap/http"/>
+
+        <operation name="ping">
+            <soap:operation soapAction="http://fylcad.com/service/ping"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+
+        <operation name="calcularMetricas">
+            <soap:operation soapAction="http://fylcad.com/service/calcularMetricas"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+
+    </binding>
+
+    <!-- ═══════════════════════════════════════════
+         SERVICE: Endpoint del servicio
+    ═══════════════════════════════════════════ -->
+    <service name="FylcadService">
+        <documentation>
+            Servicio topográfico FYLCAD.
+            Procesa coordenadas XYZ y genera métricas
+            de área, volumen y desnivel del terreno.
+        </documentation>
+        <port name="FylcadPort" binding="tns:FylcadBinding">
+            <soap:address location="http://localhost/FYLCAD/soap_server.php"/>
+        </port>
+    </service>
+
+</definitions>
