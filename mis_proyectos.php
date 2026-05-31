@@ -30,9 +30,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['eliminar_id'])) {
 
 /* ── Filtros y búsqueda ── */
 $busqueda  = trim($_GET['q']     ?? '');
-$orden     = in_array($_GET['orden'] ?? '', ['creado_en','nombre','area_m2','total_puntos'])
-             ? $_GET['orden'] : 'creado_en';
-$dir       = ($_GET['dir'] ?? 'desc') === 'asc' ? 'ASC' : 'DESC';
+// Whitelist explícita para prevenir SQL injection en ORDER BY
+$ordenPermitido = ['creado_en', 'nombre', 'area_m2', 'total_puntos'];
+$orden = in_array($_GET['orden'] ?? '', $ordenPermitido, true)
+         ? $_GET['orden'] : 'creado_en';
+$dir   = (($_GET['dir'] ?? 'desc') === 'asc') ? 'ASC' : 'DESC';
 $pagina    = max(1, (int)($_GET['p'] ?? 1));
 $porPagina = 12;
 $offset    = ($pagina - 1) * $porPagina;
@@ -211,7 +213,7 @@ function fmtFecha($f) { return date('d/m/Y', strtotime($f)); }
                 <div class="icon">📁</div>
                 <h3><?= $busqueda ? 'Sin resultados' : 'Aún no tienes proyectos' ?></h3>
                 <p><?= $busqueda
-                    ? "No encontramos proyectos con «{$busqueda}»."
+                    ? 'No encontramos proyectos con «' . htmlspecialchars($busqueda, ENT_QUOTES, 'UTF-8') . '».'
                     : "Carga tu primer archivo CSV en el módulo 3D<br>y guarda el proyecto para verlo aquí." ?></p>
                 <a href="proyecto.php">→ Ir al módulo 3D</a>
             </div>
@@ -278,13 +280,13 @@ function fmtFecha($f) { return date('d/m/Y', strtotime($f)); }
 
         <?php if ($totalPaginas > 1): ?>
         <div class="pagination">
-            <a href="?p=<?= $pagina-1 ?>&q=<?= urlencode($busqueda) ?>&orden=<?= $orden ?>"
+            <a href="?p=<?= $pagina-1 ?>&q=<?= urlencode($busqueda) ?>&orden=<?= htmlspecialchars($orden) ?>"
                class="page-btn <?= $pagina <= 1 ? 'disabled' : '' ?>">← Anterior</a>
             <?php for ($i = max(1,$pagina-2); $i <= min($totalPaginas,$pagina+2); $i++): ?>
-            <a href="?p=<?= $i ?>&q=<?= urlencode($busqueda) ?>&orden=<?= $orden ?>"
+            <a href="?p=<?= $i ?>&q=<?= urlencode($busqueda) ?>&orden=<?= htmlspecialchars($orden) ?>"
                class="page-btn <?= $i === $pagina ? 'active' : '' ?>"><?= $i ?></a>
             <?php endfor; ?>
-            <a href="?p=<?= $pagina+1 ?>&q=<?= urlencode($busqueda) ?>&orden=<?= $orden ?>"
+            <a href="?p=<?= $pagina+1 ?>&q=<?= urlencode($busqueda) ?>&orden=<?= htmlspecialchars($orden) ?>"
                class="page-btn <?= $pagina >= $totalPaginas ? 'disabled' : '' ?>">Siguiente →</a>
         </div>
         <?php endif; ?>

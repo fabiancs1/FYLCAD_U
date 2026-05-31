@@ -283,12 +283,9 @@ CREATE TABLE `usuarios` (
 -- Volcado de datos para la tabla `usuarios`
 --
 
+-- Datos de ejemplo (hashes de demostración, cambiar en producción)
 INSERT INTO `usuarios` (`id`, `nombre`, `email`, `foto_perfil`, `password`, `plan`, `activo`, `avatar_color`, `ultimo_acceso`, `creado_en`, `actualizado_en`, `reset_token`, `reset_expira`) VALUES
-(1, 'Usuario Demo', 'demo@fylcad.com', NULL, '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'free', 1, '#00e5c0', NULL, '2026-02-22 05:26:43', '2026-02-22 05:26:43', NULL, NULL),
-(2, 'fabian', 'fabirodri789@gmail.com', 'uploads/avatares/avatar_2_1772173905.jpeg', '$2y$10$K7vZ8JqLXmAwSyhrQL//LuD3qjmAaBDQOCS78eN57t74KBtwuVgJu', 'premium', 1, '#00e5c0', '2026-05-26 20:42:35', '2026-02-22 05:27:57', '2026-05-26 20:42:35', NULL, NULL),
-(3, 'Eduardo', 'fabi26@gmail.com', NULL, '$2y$10$ez/vrRW.CqS.ZPz1.t.PweaGVdjqfdtLYTlm1OpIN190DLjqatZei', 'free', 1, '#00e5c0', '2026-03-03 15:36:26', '2026-03-03 15:35:57', '2026-03-03 15:36:26', NULL, NULL),
-(4, 'fabian prueba', 'pruebafabian@gmail.com', NULL, '$2y$10$JVH6v/WpXvW4rkuqH4I57eYsj5Y0eEYfp1aeMHa3rj9q8escDL2oS', 'free', 1, '#00e5c0', '2026-05-12 07:01:47', '2026-05-12 06:57:37', '2026-05-12 07:01:47', NULL, NULL),
-(5, 'pruebavideo@gmail.com', 'pruebavideo@gmail.com', NULL, '$2y$10$FPuDy5xSSpLqt8kZfmbC4.vddVD86UV/JdNWvZ9wUX.6wepw9zvym', 'free', 1, '#00e5c0', '2026-05-12 07:09:42', '2026-05-12 07:05:38', '2026-05-12 07:09:42', NULL, NULL);
+(1, 'Admin FYLCAD', 'admin@fylcad.com', NULL, '[HASH_BCRYPT_AQUI]', 'premium', 1, '#00e5c0', NULL, '2026-01-01 00:00:00', '2026-01-01 00:00:00', NULL, NULL);
 
 --
 -- Índices para tablas volcadas
