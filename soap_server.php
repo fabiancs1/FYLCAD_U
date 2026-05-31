@@ -36,7 +36,7 @@ $wsdl = __DIR__ . '/fylcad_service.wsdl';
 
 ini_set('soap.wsdl_cache_enabled', 0);
 $server = new SoapServer($wsdl, [
-    'uri'      => 'http://fylcad.com/service',
+    'uri'      => 'https://fylcad.com/service',
     'encoding' => 'UTF-8',
 ]);
 

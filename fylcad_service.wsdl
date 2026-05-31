@@ -10,17 +10,17 @@
     leyendo este contrato sin acceder al código.
 -->
 <definitions name="FylcadService"
-    targetNamespace="http://fylcad.com/service"
-    xmlns="http://schemas.xmlsoap.org/wsdl/"
-    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
-    xmlns:tns="http://fylcad.com/service"
+    targetNamespace="https://fylcad.com/service"
+    xmlns="https://schemas.xmlsoap.org/wsdl/"
+    xmlns:soap="https://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:tns="https://fylcad.com/service"
     xmlns:xsd="http://www.w3.org/2001/XMLSchema">
 
     <!-- ═══════════════════════════════════════════
          TYPES: Tipos de datos del sistema
     ═══════════════════════════════════════════ -->
     <types>
-        <xsd:schema targetNamespace="http://fylcad.com/service">
+        <xsd:schema targetNamespace="https://fylcad.com/service">
 
             <!-- Punto topográfico -->
             <xsd:complexType name="PuntoTopografico">
@@ -138,10 +138,10 @@
     ═══════════════════════════════════════════ -->
     <binding name="FylcadBinding" type="tns:FylcadPortType">
         <soap:binding style="document"
-            transport="http://schemas.xmlsoap.org/soap/http"/>
+            transport="https://schemas.xmlsoap.org/soap/http"/>
 
         <operation name="ping">
-            <soap:operation soapAction="http://fylcad.com/service/ping"/>
+            <soap:operation soapAction="https://fylcad.com/service/ping"/>
             <input>
                 <soap:body use="literal"/>
             </input>
@@ -151,7 +151,7 @@
         </operation>
 
         <operation name="calcularMetricas">
-            <soap:operation soapAction="http://fylcad.com/service/calcularMetricas"/>
+            <soap:operation soapAction="https://fylcad.com/service/calcularMetricas"/>
             <input>
                 <soap:body use="literal"/>
             </input>

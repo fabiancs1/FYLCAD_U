@@ -57,7 +57,7 @@ foreach ($datasets as $nombre => $puntos) {
 
     // ── POR REFERENCIA: envía solo un ID lógico ───────────
     // El servidor tiene los datos en caché, el cliente solo manda el ID
-    $idProyecto      = md5(json_encode($puntos)); // ID único del dataset
+    $idProyecto      = hash("sha256", json_encode($puntos)); // ID único del dataset
     $payloadRef      = "FYLCAD|lookup_ref|{$idProyecto}";
     $bytesRef        = strlen($payloadRef);
     $tiempoRefTotal  = 0;
