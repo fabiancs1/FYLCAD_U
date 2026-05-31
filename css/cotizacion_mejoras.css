@@ -66,6 +66,7 @@ header {
 /* ── KPIs sidebar ── */
 .kpis {
     border-bottom: 1px solid rgba(0,229,192,0.06) !important;
+    animation-delay: 0.05s;
 }
 
 .kpi {
@@ -312,7 +313,7 @@ header {
 .id-sec,
 .apu-wrap { animation: fadeSlideUp 0.3s ease forwards; }
 
-.kpis       { animation-delay: 0.05s; }
+/* animation-delay merged into .kpis above */
 .zona-sec   { animation-delay: 0.10s; }
 .id-sec     { animation-delay: 0.15s; }
 

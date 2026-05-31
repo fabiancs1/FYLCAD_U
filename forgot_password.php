@@ -22,7 +22,7 @@ try {
         ADD COLUMN IF NOT EXISTS reset_token     VARCHAR(255) NULL,
         ADD COLUMN IF NOT EXISTS reset_expira    DATETIME     NULL
     ");
-} catch (Exception $e) {}
+} catch (Exception $e) { /* Columna ya existe, ignorar error */ }
 
 $mensaje = '';
 $error   = '';

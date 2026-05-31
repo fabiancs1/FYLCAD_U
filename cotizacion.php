@@ -795,13 +795,13 @@ textarea.inp{resize:vertical;min-height:48px;font-size:10px;line-height:1.6;}
 
       <!-- Identificación -->
       <div class="id-sec" style="flex:1;">
-        <label class="lbl">Nombre del presupuesto</label>
+        <label for="iNom" class="lbl">Nombre del presupuesto</label>
         <input class="inp" id="iNom" type="text" placeholder="Ej: Vía La Sanjuana — Tramo 1">
-        <label class="lbl">Cliente</label>
+        <label for="iCli" class="lbl">Cliente</label>
         <input class="inp" id="iCli" type="text" placeholder="Nombre o razón social">
-        <label class="lbl">Municipio</label>
+        <label for="iMun" class="lbl">Municipio</label>
         <input class="inp" id="iMun" type="text" placeholder="Ej: El Zulia, N. Santander">
-        <label class="lbl">Tipo de obra</label>
+        <label for="iTipo" class="lbl">Tipo de obra</label>
         <select class="inp" id="iTipo">
           <option value="via">Vía / Carretera rural</option>
           <option value="urb">Urbanismo / Lote</option>
@@ -809,7 +809,7 @@ textarea.inp{resize:vertical;min-height:48px;font-size:10px;line-height:1.6;}
           <option value="edi">Edificio / Obra civil</option>
           <option value="mov">Solo movimiento de tierras</option>
         </select>
-        <label class="lbl">Observaciones</label>
+        <label for="iObs" class="lbl">Observaciones</label>
         <textarea class="inp" id="iObs" placeholder="Condiciones del terreno…"></textarea>
       </div>
     </div>
@@ -838,7 +838,7 @@ textarea.inp{resize:vertical;min-height:48px;font-size:10px;line-height:1.6;}
 
       <!-- Parámetros volumétricos -->
       <div class="apu-sec" style="margin-bottom:6px;">
-        <div class="apu-hdr" style="cursor:pointer;" onclick="this.nextElementSibling.classList.toggle('hidden')">
+        <div role="button" tabindex="0" class="apu-hdr" style="cursor:pointer;" onkeydown="if(event.key==='Enter'||event.key===' ')this.click()" onclick="this.nextElementSibling.classList.toggle('hidden')">
           <div class="apu-num" style="background:var(--acc-dim);color:var(--acc);">⚙</div>
           <span class="apu-sec-name">Parámetros volumétricos</span>
           <span class="apu-sec-sub" style="font-size:9px;">▾</span>
@@ -867,7 +867,7 @@ textarea.inp{resize:vertical;min-height:48px;font-size:10px;line-height:1.6;}
 
       <!-- AIU desglosado -->
       <div class="apu-sec" style="margin-bottom:6px;">
-        <div class="apu-hdr" style="cursor:pointer;" onclick="this.nextElementSibling.classList.toggle('hidden')">
+        <div role="button" tabindex="0" class="apu-hdr" style="cursor:pointer;" onkeydown="if(event.key==='Enter'||event.key===' ')this.click()" onclick="this.nextElementSibling.classList.toggle('hidden')">
           <div class="apu-num" style="background:rgba(99,102,241,.15);color:#818cf8;">AIU</div>
           <span class="apu-sec-name">A + I + U</span>
           <span class="apu-sec-sub" id="bAIUpct" style="font-size:9px;color:#818cf8;">15+5+10%</span>

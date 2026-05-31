@@ -82,7 +82,7 @@ function construirRequestXML(string $operacion, array $puntos): string {
  */
 function enviarXML(string $ip, int $puerto, string $xml): string {
     $socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
-    if ($socket === false) return "ERROR: No se pudo crear el socket.";
+    if ($socket === false) { return "ERROR: No se pudo crear el socket."; }
 
     if (!socket_connect($socket, $ip, $puerto)) {
         socket_close($socket);
@@ -111,7 +111,7 @@ function hacerLookup(string $registryIP, int $registryPuerto, string $nombre): a
     socket_close($sock);
 
     $partes = explode('|', $resp);
-    if ($partes[0] !== 'OK' || count($partes) < 3) return false;
+    if ($partes[0] !== 'OK' || count($partes) < 3) { return false; }
 
     return ['ip' => $partes[1], 'puerto' => (int)$partes[2]];
 }

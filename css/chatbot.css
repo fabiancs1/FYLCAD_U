@@ -165,7 +165,7 @@
 
 #fylbot-close:hover {
     color: #ffffff;
-    background: rgba(255,255,255,0.08);
+    background: rgba(255,255,255,0.15);
 }
 
 /* ── Mensajes ── */
@@ -311,7 +311,7 @@
 .fylbot-sugerencia:hover {
     background: rgba(124, 58, 237, 0.15);
     border-color: #7c3aed;
-    color: #c4b5fd;
+    color: #ddd6fe;
     transform: translateY(-1px);
 }
 

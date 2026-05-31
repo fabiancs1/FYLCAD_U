@@ -34,7 +34,7 @@ $nombreUsuario = $_SESSION['usuario_nombre'] ?? null;
 <header class="header" id="header">
     <a href="index.php" class="logo">FYL<span>CAD</span></a>
 
-    <nav class="nav">
+    <nav aria-label="Navegación principal" class="nav">
         <a href="index.php">Inicio</a>
         <a href="planes.php" class="active">Planes</a>
        
@@ -314,8 +314,7 @@ $nombreUsuario = $_SESSION['usuario_nombre'] ?? null;
                 ["¿Puedo cancelar en cualquier momento?",
                  "Sí. Sin contratos ni cargos por cancelación. Al cancelar conservas acceso hasta el fin del período pagado."],
             ];
-            foreach ($faqs as [$q, $a]):
-            ?>
+            foreach ($faqs as [$q, $a]) { ?>
             <div class="faq-item">
                 <button class="faq-q">
                     <span><?= $q ?></span>
@@ -325,7 +324,7 @@ $nombreUsuario = $_SESSION['usuario_nombre'] ?? null;
                     <p><?= $a ?></p>
                 </div>
             </div>
-            <?php endforeach; ?>
+            <?php } ?>
         </div>
     </div>
 </section>
@@ -350,7 +349,7 @@ $nombreUsuario = $_SESSION['usuario_nombre'] ?? null;
 <footer class="footer">
     <div class="footer-logo">FYLCAD</div>
     <p>© 2026 FYLCAD — Ingeniería Digital</p>
-    <nav class="footer-links">
+    <nav aria-label="Navegación secundaria" class="footer-links">
         <a href="#">Privacidad</a>
         <a href="#">Términos</a>
         <a href="mailto:contacto@fylcad.com">Contacto</a>

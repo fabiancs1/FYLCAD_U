@@ -307,31 +307,21 @@ class ServiceConnector implements IServiceConnector {
             return null;
         }
 
-        switch ($codigoHttp) {
-            case 200:
-                self::$ultimaRespuesta['error'] = '';
-                return $cuerpo;
-            case 404:
-                self::$ultimaRespuesta['error'] =
-                    "Servicio no encontrado (HTTP 404).";
-                return null;
-            case 429:
-                self::$ultimaRespuesta['error'] =
-                    "Límite de peticiones excedido (HTTP 429).";
-                return null;
-            case 500:
-                self::$ultimaRespuesta['error'] =
-                    "Error interno del servidor externo (HTTP 500).";
-                return null;
-            case 503:
-                self::$ultimaRespuesta['error'] =
-                    "Servicio no disponible temporalmente (HTTP 503).";
-                return null;
-            default:
-                self::$ultimaRespuesta['error'] =
-                    "Respuesta inesperada del servicio (HTTP {$codigoHttp}).";
-                return null;
+        $errores = [
+            404 => "Servicio no encontrado (HTTP 404).",
+            429 => "Límite de peticiones excedido (HTTP 429).",
+            500 => "Error interno del servidor externo (HTTP 500).",
+            503 => "Servicio no disponible temporalmente (HTTP 503).",
+        ];
+
+        if ($codigoHttp === 200) {
+            self::$ultimaRespuesta['error'] = '';
+            return $cuerpo;
         }
+
+        self::$ultimaRespuesta['error'] = $errores[$codigoHttp]
+            ?? "Respuesta inesperada del servicio (HTTP {$codigoHttp}).";
+        return null;
     }
 
     // ═══════════════════════════════════════════════════════════

@@ -148,6 +148,6 @@ function lookupUDDI(string $ip, int $puerto, string $nombre): string|false {
 
     // Respuesta: OK|endpoint|soap
     $partes = explode('|', $resp);
-    if ($partes[0] !== 'OK' || count($partes) < 2) return false;
+    if ($partes[0] !== 'OK' || count($partes) < 2) { return false; }
     return $partes[1]; // endpoint HTTP
 }

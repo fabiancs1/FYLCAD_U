@@ -38,7 +38,7 @@ echo "[SERVIDOR XML] Esperando conexiones...\n";
 // ── Bucle principal ───────────────────────────────────────
 while (true) {
     $cliente = socket_accept($socket);
-    if ($cliente === false) continue;
+    if ($cliente === false) { continue; }
 
     socket_getpeername($cliente, $clienteIP);
     echo "\n[HANDSHAKE OK] Cliente conectado desde: {$clienteIP}\n";
@@ -112,7 +112,7 @@ socket_close($socket);
  */
 function validarXML(string $xmlString): bool {
     $dom = new DOMDocument();
-    if (!@$dom->loadXML($xmlString)) return false;
+    if (!@$dom->loadXML($xmlString)) { return false; }
     $xsdPath = __DIR__ . '/fylcad_protocol.xsd';
     return @$dom->schemaValidate($xsdPath);
 }

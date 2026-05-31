@@ -248,25 +248,35 @@ $conocimiento = [
 // ══════════════════════════════════════════════════════════
 // MOTOR DE BÚSQUEDA POR PALABRAS CLAVE
 // ══════════════════════════════════════════════════════════
+// Calcular puntos de coincidencia para una frase
+function calcularPuntosFrase(string $mensaje, string $frase): int {
+    $puntos = 0;
+    if (strpos($mensaje, $frase) !== false) {
+        $puntos += 10;
+    }
+    foreach (explode(' ', $frase) as $palabra) {
+        if (strlen($palabra) > 3 && strpos($mensaje, $palabra) !== false) {
+            $puntos += 2;
+        }
+    }
+    return $puntos;
+}
+
+// Calcular total de puntos para un item
+function calcularPuntosItem(string $mensaje, array $item): int {
+    $puntos = 0;
+    foreach ($item['palabras'] as $frase) {
+        $puntos += calcularPuntosFrase($mensaje, $frase);
+    }
+    return $puntos;
+}
+
 function buscarRespuesta(string $mensaje, array $conocimiento): array {
     $mejor        = null;
     $maxPuntos    = 0;
 
     foreach ($conocimiento as $item) {
-        $puntos = 0;
-        foreach ($item['palabras'] as $frase) {
-            // Coincidencia exacta de frase
-            if (strpos($mensaje, $frase) !== false) {
-                $puntos += 10;
-            }
-            // Coincidencia por palabras individuales
-            $palabras = explode(' ', $frase);
-            foreach ($palabras as $palabra) {
-                if (strlen($palabra) > 3 && strpos($mensaje, $palabra) !== false) {
-                    $puntos += 2;
-                }
-            }
-        }
+        $puntos = calcularPuntosItem($mensaje, $item);
         if ($puntos > $maxPuntos) {
             $maxPuntos = $puntos;
             $mejor     = $item;

@@ -1480,7 +1480,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['archivo'])) {
         <?php if ($usuarioPlan === 'premium'): ?>
         <button class="ctrl-btn"  id="btnExportPDF" title="Exportar PDF profesional">↓ PDF</button>
         <?php else: ?>
-        <button class="ctrl-btn"  id="btnExportPDF" title="Exportar PDF del plano">↓ PDF</button>
+        <button class="ctrl-btn"  id="btnExportPDF2" title="Exportar PDF del plano">↓ PDF</button>
         <?php endif; ?>
         <div class="ctrl-divider"></div>
         <button class="ctrl-btn"  id="btnFullscreen" title="Pantalla completa">⛶</button>

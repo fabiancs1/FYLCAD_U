@@ -105,7 +105,7 @@ echo "\n[SERVIDOR] Esperando conexiones...\n\n";
 // ── Bucle principal ────────────────────────────────────────
 while (true) {
     $cliente = socket_accept($socket);
-    if ($cliente === false) continue;
+    if ($cliente === false) { continue; }
 
     socket_getpeername($cliente, $clienteIP);
     $datos = trim(socket_read($cliente, 4096, PHP_NORMAL_READ));

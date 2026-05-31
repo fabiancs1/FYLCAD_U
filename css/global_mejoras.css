@@ -430,8 +430,8 @@
 
 /* Selección de texto */
 ::selection {
-    background: rgba(0,229,192,0.25);
-    color: #fff;
+    background: rgba(0,229,192,0.45); /* Increased opacity for contrast */
+    color: #ffffff;
 }
 
 /* Focus visible global */

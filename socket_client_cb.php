@@ -102,10 +102,10 @@ function revisarCallback($cbSocket): void {
         return;
     }
     $conn = socket_accept($cbSocket);
-    if ($conn === false) return;
+    if ($conn === false) { return; }
     $msg = trim(socket_read($conn, 1024, PHP_NORMAL_READ));
     socket_close($conn);
-    if (empty($msg)) return;
+    if (empty($msg)) { return; }
     $partes  = explode('|', $msg);
     $evento  = $partes[1] ?? 'desconocido';
     $cbDatos = $partes[2] ?? '';
@@ -125,7 +125,7 @@ function hacerLookup(string $rIP, int $rPuerto, string $nombre): array|false {
     $resp   = trim(socket_read($s, 512, PHP_NORMAL_READ));
     socket_close($s);
     $partes = explode('|', $resp);
-    if ($partes[0] !== 'OK' || count($partes) < 3) return false;
+    if ($partes[0] !== 'OK' || count($partes) < 3) { return false; }
     return ['ip' => $partes[1], 'puerto' => (int)$partes[2]];
 }
 

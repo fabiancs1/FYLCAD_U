@@ -905,10 +905,10 @@ canvas:active { cursor:grabbing; }
 .pt-uso  { font-size: 10px; color: var(--muted); text-align: right; }
 
 /* Badge estados de pendiente */
-.pend-badge.tb-plano     { background: rgba(34,197,94,.15);  color: #22c55e; border: 1px solid rgba(34,197,94,.3); }
-.pend-badge.tb-ondulado  { background: rgba(251,191,36,.15); color: #fbbf24; border: 1px solid rgba(251,191,36,.3); }
-.pend-badge.tb-quebrado  { background: rgba(249,115,22,.15); color: #f97316; border: 1px solid rgba(249,115,22,.3); }
-.pend-badge.tb-escarpado { background: rgba(239,68,68,.15);  color: #ef4444; border: 1px solid rgba(239,68,68,.3); }
+.pend-badge.tb-plano     { background: rgba(34,197,94,.15);  color: #4ade80; border: 1px solid rgba(34,197,94,.3); }
+.pend-badge.tb-ondulado  { background: rgba(251,191,36,.15); color: #fcd34d; border: 1px solid rgba(251,191,36,.3); }
+.pend-badge.tb-quebrado  { background: rgba(249,115,22,.15); color: #fb923c; border: 1px solid rgba(249,115,22,.3); }
+.pend-badge.tb-escarpado { background: rgba(239,68,68,.15);  color: #f87171; border: 1px solid rgba(239,68,68,.3); }
 
 /* KPI grid — métricas */
 .kpi-grid {
@@ -940,10 +940,10 @@ canvas:active { cursor:grabbing; }
     font: 700 10px 'DM Mono',monospace; padding: 3px 10px; border-radius: 20px;
     background: rgba(0,229,192,.12); color: #00e5c0; border: 1px solid rgba(0,229,192,.25);
 }
-.terrain-badge.tb-plano     { background: rgba(34,197,94,.12);  color: #22c55e; border-color: rgba(34,197,94,.25); }
-.terrain-badge.tb-ondulado  { background: rgba(251,191,36,.12); color: #fbbf24; border-color: rgba(251,191,36,.25); }
-.terrain-badge.tb-quebrado  { background: rgba(249,115,22,.12); color: #f97316; border-color: rgba(249,115,22,.25); }
-.terrain-badge.tb-escarpado { background: rgba(239,68,68,.12);  color: #ef4444; border-color: rgba(239,68,68,.25); }
+.terrain-badge.tb-plano     { background: rgba(34,197,94,.12);  color: #4ade80; border-color: rgba(34,197,94,.25); }
+.terrain-badge.tb-ondulado  { background: rgba(251,191,36,.12); color: #fcd34d; border-color: rgba(251,191,36,.25); }
+.terrain-badge.tb-quebrado  { background: rgba(249,115,22,.12); color: #fb923c; border-color: rgba(249,115,22,.25); }
+.terrain-badge.tb-escarpado { background: rgba(239,68,68,.12);  color: #f87171; border-color: rgba(239,68,68,.25); }
 
 /* Barra de elevación */
 .elev-bar-wrap { padding: 10px 14px 4px; }
