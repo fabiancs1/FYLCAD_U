@@ -15,3 +15,6 @@ Thumbs.db
 
 # Logs
 *.log
+
+# Base de datos con datos sensibles
+fylcad_db.sql
