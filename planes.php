@@ -21,9 +21,9 @@ $nombreUsuario = $_SESSION['usuario_nombre'] ?? null;
     <meta charset="UTF-8">
     <title>FYLCAD — Planes y Precios</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" crossorigin>
     <link rel="stylesheet" href="css/planes.css">
     <link rel="stylesheet" href="css/responsive.css">
     <link rel="stylesheet" href="css/global_mejoras.css">

@@ -30,11 +30,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['eliminar_id'])) {
 
 /* ── Filtros y búsqueda ── */
 $busqueda  = trim($_GET['q']     ?? '');
-// Whitelist explícita para prevenir SQL injection en ORDER BY
-$ordenPermitido = ['creado_en', 'nombre', 'area_m2', 'total_puntos'];
-$orden = in_array($_GET['orden'] ?? '', $ordenPermitido, true)
-         ? $_GET['orden'] : 'creado_en';
-$dir   = (($_GET['dir'] ?? 'desc') === 'asc') ? 'ASC' : 'DESC';
+// Mapa de columnas permitidas para ORDER BY - previene SQL injection
+$columnasPermitidas = [
+    'creado_en'     => 'p.creado_en',
+    'nombre'        => 'p.nombre',
+    'area_m2'       => 'p.area_m2',
+    'total_puntos'  => 'p.total_puntos',
+];
+$ordenInput = $_GET['orden'] ?? 'creado_en';
+$ordenCol   = array_key_exists($ordenInput, $columnasPermitidas)
+              ? $columnasPermitidas[$ordenInput]
+              : 'p.creado_en';
+$orden      = $ordenInput; // para URLs
+$dir        = (($_GET['dir'] ?? 'desc') === 'asc') ? 'ASC' : 'DESC';
 $pagina    = max(1, (int)($_GET['p'] ?? 1));
 $porPagina = 12;
 $offset    = ($pagina - 1) * $porPagina;
@@ -60,7 +68,7 @@ $stmt = $db->prepare("
     LEFT JOIN cotizaciones c ON c.proyecto_id = p.id
     LEFT JOIN archivos a     ON a.proyecto_id = p.id
     $where
-    ORDER BY p.{$orden} {$dir}
+    ORDER BY {$ordenCol} {$dir}
     LIMIT :limit OFFSET :offset
 ");
 $params[':limit']  = $porPagina;
@@ -81,9 +89,9 @@ function fmtFecha($f) { return date('d/m/Y', strtotime($f)); }
     <meta charset="UTF-8">
     <title>FYLCAD — Mis Proyectos</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" crossorigin>
     <link rel="stylesheet" href="css/dashboard.css">
     <style>
     .page-header { display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;gap:16px;flex-wrap:wrap; }

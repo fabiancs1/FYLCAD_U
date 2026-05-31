@@ -44,8 +44,8 @@ function bloque(string $titulo, bool $exito, string $detalle, string $extra = ''
 <head>
 <meta charset="UTF-8">
 <title>FYLCAD — Caso Testigo Guía N°6</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=DM+Mono&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=DM+Mono&display=swap" rel="stylesheet" crossorigin>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 

@@ -37,9 +37,9 @@ class Database {
         return $this->pdo;
     }
 
-    private function __clone() {}
+    private function __clone() { /* Singleton: cloning not allowed */ }
 
     public function __wakeup() {
-        throw new \Exception("No se puede deserializar un Singleton.");
+        throw new \RuntimeException("No se puede deserializar un Singleton.");
     }
 }
