@@ -20,12 +20,12 @@ require_once __DIR__ . '/app/Data/ProyectoDAO.php';
 require_once __DIR__ . '/app/Data/ActividadDAO.php';
 
 // ── Colores y helpers de presentación ────────────────────────────
-$OK  = '#00e5c0';
+$OK  = COLOR_ACCENT;
 $ERR = '#ff4d6d';
 $INF = '#6366f1';
 
 function bloque(string $titulo, bool $exito, string $detalle, string $extra = ''): void {
-    $color = $exito ? '#00e5c0' : '#ff4d6d';
+    $color = $exito ? COLOR_ACCENT : '#ff4d6d';
     $icono = $exito ? '✅' : '❌';
     echo "
     <div class='paso'>
@@ -270,7 +270,7 @@ try {
 
 } catch (PDOException $e) {
     bloque('CREATE — ProyectoDAO::crear()', false,
-        "PDOException: " . $e->getMessage()
+        PDO_EX_PREFIX . $e->getMessage()
     );
 }
 
@@ -304,7 +304,7 @@ try {
 
 } catch (PDOException $e) {
     bloque('READ — ProyectoDAO::obtenerPorId()', false,
-        "PDOException: " . $e->getMessage()
+        PDO_EX_PREFIX . $e->getMessage()
     );
 }
 
@@ -337,7 +337,7 @@ try {
 
 } catch (PDOException $e) {
     bloque('UPDATE — ProyectoDAO::actualizar()', false,
-        "PDOException: " . $e->getMessage()
+        PDO_EX_PREFIX . $e->getMessage()
     );
 }
 
@@ -372,7 +372,7 @@ try {
 
 } catch (PDOException $e) {
     bloque('ActividadDAO::crear()', false,
-        "PDOException: " . $e->getMessage()
+        PDO_EX_PREFIX . $e->getMessage()
     );
 }
 
@@ -399,12 +399,12 @@ try {
 
 } catch (PDOException $e) {
     bloque('DELETE — ProyectoDAO::eliminar()', false,
-        "PDOException: " . $e->getMessage()
+        PDO_EX_PREFIX . $e->getMessage()
     );
 }
 
 
-$color_total = $pasos_ok === $pasos_total ? '#00e5c0' : '#f59e0b';
+$color_total = $pasos_ok === $pasos_total ? COLOR_ACCENT : '#f59e0b';
 echo "
 <div class='resumen'>
   <div class='total' style='color:$color_total'>$pasos_ok / $pasos_total</div>

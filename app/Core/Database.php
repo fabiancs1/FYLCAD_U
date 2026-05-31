@@ -40,6 +40,6 @@ class Database {
     private function __clone() { /* Singleton: cloning not allowed */ }
 
     public function __wakeup() {
-        throw new \RuntimeException("No se puede deserializar un Singleton.");
+        throw new \LogicException("No se puede deserializar un Singleton.");
     }
 }

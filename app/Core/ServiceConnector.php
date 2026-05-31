@@ -276,10 +276,10 @@ class ServiceConnector implements IServiceConnector {
 
         // REFACTORING: configuración centralizada en configurarOpciones()
         $opciones = self::configurarOpciones($url);
-        $opciones[CURLOPT_HEADERFUNCTION] = function ($curl, $header) use (&$headersRecibidos) {
+        $opciones[CURLOPT_HEADERFUNCTION] = function ($_curl, $header) use (&$headersRecibidos) {
             $len    = strlen($header);
             $header = explode(':', $header, 2);
-            if (count($header) < 2) return $len;
+            if (count($header) < 2) { return $len; }
             $headersRecibidos[strtolower(trim($header[0]))] = trim($header[1]);
             return $len;
         };
@@ -353,10 +353,10 @@ class ServiceConnector implements IServiceConnector {
         ]);
         $opciones[CURLOPT_POST]           = true;
         $opciones[CURLOPT_POSTFIELDS]     = $body;
-        $opciones[CURLOPT_HEADERFUNCTION] = function ($curl, $header) use (&$headersRecibidos) {
+        $opciones[CURLOPT_HEADERFUNCTION] = function ($_curl, $header) use (&$headersRecibidos) {
             $len    = strlen($header);
             $header = explode(':', $header, 2);
-            if (count($header) < 2) return $len;
+            if (count($header) < 2) { return $len; }
             $headersRecibidos[strtolower(trim($header[0]))] = trim($header[1]);
             return $len;
         };

@@ -184,7 +184,7 @@
     pointer-events: none;
 }
 
-.topbar { position: relative; }
+.topbar-dashboard { position: relative; }
 
 /* Logo topbar */
 .topbar-logo {

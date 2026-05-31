@@ -6,6 +6,11 @@
  * Uso no autorizado prohibido.
  */
 
+define('CAT_TOPO',   CAT_TOPO);
+define('CAT_FYLCAD', CAT_FYLCAD);
+define('CAT_COT',    CAT_COT);
+define('CAT_NONE',   CAT_NONE);
+
 /**
  * FYLCAD — Chatbot de Respuestas Predefinidas
  * Archivo: chatbot.php
@@ -37,47 +42,47 @@ $conocimiento = [
     [
         'palabras' => ['que es topografia', 'topografia es', 'definicion topografia', 'que significa topografia'],
         'respuesta' => "📐 **¿Qué es la topografía?**\n\nLa topografía es la ciencia que estudia y describe la superficie terrestre, representando sus formas, accidentes y detalles naturales o artificiales en planos y mapas.\n\nEn la práctica, un topógrafo mide puntos del terreno (coordenadas X, Y, Z) para crear representaciones precisas que sirven como base para proyectos de construcción, urbanismo, agricultura y minería.",
-        'categoria' => 'Topografía General'
+        'categoria' => CAT_TOPO
     ],
     [
         'palabras' => ['que es levantamiento', 'levantamiento topografico', 'como se hace levantamiento'],
         'respuesta' => "🗺️ **Levantamiento topográfico**\n\nEs el proceso de medir y registrar las coordenadas de puntos del terreno mediante instrumentos como estación total, GPS o dron.\n\n**Pasos básicos:**\n• Se ubican estaciones de control\n• Se miden puntos de interés del terreno\n• Se registran coordenadas X (Este), Y (Norte), Z (Cota)\n• Los datos se exportan en formato CSV o texto\n• Se procesan en software como FYLCAD para generar el plano",
-        'categoria' => 'Topografía General'
+        'categoria' => CAT_TOPO
     ],
     [
         'palabras' => ['que es cota', 'cota minima', 'cota maxima', 'que significa cota'],
         'respuesta' => "📏 **¿Qué es una cota?**\n\nLa cota (o coordenada Z) representa la **altura** de un punto sobre el nivel de referencia, generalmente el nivel del mar.\n\n• **Cota mínima:** el punto más bajo del terreno medido\n• **Cota máxima:** el punto más alto del terreno medido\n• **Desnivel:** la diferencia entre cota máxima y mínima\n\nEn FYLCAD puedes ver estas tres métricas automáticamente al procesar tu archivo CSV.",
-        'categoria' => 'Topografía General'
+        'categoria' => CAT_TOPO
     ],
     [
         'palabras' => ['que es desnivel', 'desnivel del terreno', 'diferencia altura'],
         'respuesta' => "⛰️ **Desnivel del terreno**\n\nEl desnivel es la diferencia de altura entre el punto más alto y el punto más bajo de un terreno.\n\n**Fórmula:** Desnivel = Cota máxima − Cota mínima\n\n**Ejemplo:** Si la cota máxima es 397.7 m y la mínima es 376.3 m, el desnivel es **21.4 metros**.\n\nEn FYLCAD este valor se calcula automáticamente y aparece en el panel de resultados.",
-        'categoria' => 'Topografía General'
+        'categoria' => CAT_TOPO
     ],
     [
         'palabras' => ['que es tin', 'triangulacion', 'delaunay', 'red de triangulos', 'que es la red'],
         'respuesta' => "🔺 **Triangulación Delaunay y red TIN**\n\nLa **red TIN** (Triangulated Irregular Network) es un modelo digital del terreno formado por triángulos que conectan los puntos medidos.\n\nFYLCAD usa el algoritmo de **Delaunay** para construirla. Este algoritmo crea triángulos lo más equiláteros posible, maximizando la precisión del modelo.\n\n**¿Para qué sirve?**\n• Calcular el área real del terreno\n• Estimar volúmenes de corte y relleno\n• Generar curvas de nivel\n• Visualizar el terreno en 3D",
-        'categoria' => 'Topografía General'
+        'categoria' => CAT_TOPO
     ],
     [
         'palabras' => ['curvas de nivel', 'que son curvas', 'isolineas', 'contornos'],
         'respuesta' => "〰️ **Curvas de nivel**\n\nSon líneas que unen puntos del terreno que tienen la misma cota (altura). Permiten representar el relieve de un terreno en un plano 2D.\n\n**Cómo interpretarlas:**\n• Curvas juntas = terreno empinado\n• Curvas separadas = terreno plano\n• Curvas cerradas = montículo o depresión\n\nEn FYLCAD las curvas de nivel se generan automáticamente al procesar el levantamiento.",
-        'categoria' => 'Topografía General'
+        'categoria' => CAT_TOPO
     ],
     [
         'palabras' => ['que es planimetria', 'planimetria', 'altimetria', 'diferencia planimetria altimetria'],
         'respuesta' => "📋 **Planimetría vs Altimetría**\n\n• **Planimetría:** representa los objetos del terreno en un plano horizontal (coordenadas X e Y). No considera la altura.\n\n• **Altimetría:** representa las variaciones de altura del terreno (coordenada Z o cota).\n\nEn un levantamiento topográfico completo se trabajan las tres coordenadas: X, Y y Z.",
-        'categoria' => 'Topografía General'
+        'categoria' => CAT_TOPO
     ],
     [
         'palabras' => ['que es csv', 'formato csv', 'como es el archivo', 'formato del archivo'],
         'respuesta' => "📄 **Formato CSV para FYLCAD**\n\nCSV significa *Comma Separated Values* (valores separados por comas). Es el formato que FYLCAD usa para importar los puntos del levantamiento.\n\n**Formato requerido:**\n```\nX,Y,Z\n1384700.5,1136300.2,376.45\n1384720.3,1136315.8,377.12\n```\n\n**Columnas:**\n• X = coordenada Este\n• Y = coordenada Norte\n• Z = cota o altura\n\nPuedes exportar este formato desde Excel, AutoCAD Civil 3D o tu estación total.",
-        'categoria' => 'Topografía General'
+        'categoria' => CAT_TOPO
     ],
     [
         'palabras' => ['estacion total', 'gps topografico', 'instrumento', 'equipo topografico'],
         'respuesta' => "🔭 **Instrumentos topográficos**\n\n• **Estación total:** mide ángulos y distancias con alta precisión. Es el instrumento más usado en levantamientos de detalle.\n\n• **GPS topográfico (GNSS):** determina coordenadas usando satélites. Ideal para trabajos de gran extensión.\n\n• **Dron con fotogrametría:** genera nubes de puntos por fotografías aéreas. Muy eficiente para grandes áreas.\n\nCualquiera de estos equipos puede exportar los puntos en formato CSV compatible con FYLCAD.",
-        'categoria' => 'Topografía General'
+        'categoria' => CAT_TOPO
     ],
 
     // ────────────────────────────────────────────────
@@ -86,27 +91,27 @@ $conocimiento = [
     [
         'palabras' => ['como uso fylcad', 'como funciona fylcad', 'como empiezo', 'primeros pasos', 'como inicio'],
         'respuesta' => "🚀 **¿Cómo usar FYLCAD?**\n\n**Paso 1:** Regístrate o inicia sesión en la plataforma.\n\n**Paso 2:** Ve al módulo de proyectos y crea uno nuevo.\n\n**Paso 3:** Carga tu archivo CSV con las coordenadas del levantamiento.\n\n**Paso 4:** FYLCAD procesa automáticamente los puntos y genera:\n• Visualización 3D del terreno\n• Métricas de área, volumen y desnivel\n• Red de triangulación TIN\n• Curvas de nivel\n\n**Paso 5:** Genera la cotización de obra o exporta el plano en PDF.",
-        'categoria' => 'Uso de FYLCAD'
+        'categoria' => CAT_FYLCAD
     ],
     [
         'palabras' => ['como cargo csv', 'subir archivo', 'cargar archivo', 'importar puntos', 'como subo'],
         'respuesta' => "📤 **Cómo cargar tu archivo CSV**\n\n1. Inicia sesión en FYLCAD\n2. Ve a **Mis Proyectos** → **Nuevo Proyecto**\n3. Asigna un nombre al proyecto\n4. Haz clic en **Seleccionar archivo** y elige tu CSV\n5. Haz clic en **Procesar**\n\n**Requisitos del archivo:**\n• Formato: .csv o .txt\n• Columnas: X, Y, Z (con encabezado)\n• Separador: coma (,)\n• Plan Free: máximo 50 puntos\n• Plan Premium: puntos ilimitados",
-        'categoria' => 'Uso de FYLCAD'
+        'categoria' => CAT_FYLCAD
     ],
     [
         'palabras' => ['como exporto', 'exportar pdf', 'descargar plano', 'guardar plano', 'exportar resultado'],
         'respuesta' => "📥 **Exportar plano y resultados**\n\nDesde el visor de tu proyecto puedes exportar:\n\n• **PNG:** imagen del plano topográfico (disponible en todos los planes)\n• **PDF:** reporte profesional con métricas, cotización y plano (solo Plan Premium)\n\n**Pasos:**\n1. Abre tu proyecto procesado\n2. Haz clic en el botón **Exportar**\n3. Elige el formato deseado\n4. El archivo se descarga automáticamente",
-        'categoria' => 'Uso de FYLCAD'
+        'categoria' => CAT_FYLCAD
     ],
     [
         'palabras' => ['visor 3d', 'como veo en 3d', 'visualizacion', 'como roto el modelo', 'navegar terreno'],
         'respuesta' => "🌐 **Visor 3D de FYLCAD**\n\nUna vez procesado tu levantamiento, el visor 3D te permite:\n\n• **Rotar:** clic izquierdo + arrastrar\n• **Zoom:** rueda del mouse\n• **Desplazar:** clic derecho + arrastrar\n• **Ver curvas de nivel:** activar desde el panel lateral\n• **Ver simbología:** identificar tipos de punto por color\n\nEl visor funciona directamente en el navegador, sin instalar nada adicional.",
-        'categoria' => 'Uso de FYLCAD'
+        'categoria' => CAT_FYLCAD
     ],
     [
         'palabras' => ['error al cargar', 'no carga', 'fallo', 'error archivo', 'problema csv'],
         'respuesta' => "❗ **Errores comunes al cargar archivos**\n\n**El archivo no carga:**\n• Verifica que sea .csv o .txt\n• Asegúrate que tenga encabezado X,Y,Z\n• Revisa que el separador sea coma (,) no punto y coma (;)\n\n**El modelo no se ve bien:**\n• Verifica que las coordenadas estén en el sistema correcto\n• Asegúrate que Z no sea cero en todos los puntos\n\n**Límite de puntos:**\n• Plan Free acepta máximo 50 puntos\n• Actualiza a Premium para procesar levantamientos completos",
-        'categoria' => 'Uso de FYLCAD'
+        'categoria' => CAT_FYLCAD
     ],
 
     // ────────────────────────────────────────────────
@@ -134,17 +139,17 @@ $conocimiento = [
     [
         'palabras' => ['como genero cotizacion', 'cotizacion automatica', 'como cotizo', 'generar presupuesto'],
         'respuesta' => "💰 **Generar cotización automática**\n\nDespués de procesar tu levantamiento:\n\n1. Ve al panel de resultados de tu proyecto\n2. Haz clic en **Generar Cotización**\n3. Ajusta las tarifas según el mercado local:\n   • Tarifa movimiento de tierra ($/m³)\n   • Tarifa nivelación ($/m²)\n   • Tarifa cerramiento ($/ml)\n4. FYLCAD calcula automáticamente el costo total\n5. Exporta el presupuesto en PDF (Plan Premium)",
-        'categoria' => 'Cotización'
+        'categoria' => CAT_COT
     ],
     [
         'palabras' => ['que calcula cotizacion', 'que incluye cotizacion', 'items cotizacion', 'que cubre el presupuesto'],
         'respuesta' => "📋 **¿Qué calcula la cotización de FYLCAD?**\n\nLa cotización incluye tres ítems principales:\n\n**1. Movimiento de tierra**\n• Basado en el volumen (m³) del levantamiento\n• Incluye corte, cargue y transporte de material\n\n**2. Nivelación del terreno**\n• Basado en el área (m²)\n• Incluye compactación y conformación de la plataforma\n\n**3. Cerramiento del predio**\n• Basado en el perímetro (ml)\n• Estimado para malla o cerramiento convencional\n\nCada tarifa es configurable por el usuario según los precios del mercado local.",
-        'categoria' => 'Cotización'
+        'categoria' => CAT_COT
     ],
     [
         'palabras' => ['como cambio tarifa', 'modificar tarifa', 'precio por metro', 'ajustar precio'],
         'respuesta' => "⚙️ **Ajustar tarifas de cotización**\n\nLas tarifas predeterminadas en FYLCAD son:\n• Movimiento de tierra: $8.50 USD/m³\n• Nivelación: $3.20 USD/m²\n• Cerramiento: $45.00 USD/ml\n\nPuedes modificarlas directamente en el formulario de cotización antes de generarla. Estas tarifas varían según:\n• La ciudad y región\n• El tipo de terreno\n• La distancia de acarreo\n• El costo de mano de obra local",
-        'categoria' => 'Cotización'
+        'categoria' => CAT_COT
     ],
 
     // ────────────────────────────────────────────────
@@ -272,7 +277,7 @@ function buscarRespuesta(string $mensaje, array $conocimiento): array {
     if ($maxPuntos < 2 || $mejor === null) {
         return [
             'respuesta' => "🤔 No encontré una respuesta específica para eso.\n\nPuedo ayudarte con:\n• Topografía (conceptos, levantamientos, coordenadas)\n• Uso de FYLCAD (carga de CSV, resultados, exportar)\n• Cotizaciones de obra\n• Proveedores\n• Planes y precios\n\nIntenta reformular tu pregunta o escríbenos a **soporte@fylcad.com**",
-            'categoria' => 'Sin resultado'
+            'categoria' => CAT_NONE
         ];
     }
 

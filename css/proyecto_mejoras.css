@@ -19,7 +19,7 @@
     background: linear-gradient(90deg, transparent, rgba(0,229,192,0.4), transparent);
 }
 
-.header { position: relative; }
+.header-proyecto { position: relative; }
 
 .logo {
     font-size: 20px;

@@ -12,8 +12,8 @@ if (isset($_FILES['archivo'])) {
     $archivo = $_FILES['archivo']['tmp_name'];
     $puntos = [];
 
-    if (($handle = fopen($archivo, "r")) !== FALSE) {
-        while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+    if (($handle = fopen($archivo, "r")) !== false) {
+        while (($data = fgetcsv($handle, 1000, ",")) !== false) {
             $puntos[] = [
                 "x" => floatval($data[0]),
                 "y" => floatval($data[1])

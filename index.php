@@ -913,12 +913,15 @@ if (isset($_SESSION["usuario_id"])) {
 <section id="hero">
     <!-- Video 1: Drone topográfico sobre terreno montañoso -->
     <video class="video-bg active" autoplay muted loop playsinline>
+        <track kind="captions" src="" label="Español" srclang="es">
     <source src="videos/terreno1.mp4" type="video/mp4">
 </video>
 <video class="video-bg" muted loop playsinline>
+        <track kind="captions" src="" label="Español" srclang="es">
     <source src="videos/terreno2.mp4" type="video/mp4">
 </video>
 <video class="video-bg" muted loop playsinline>
+        <track kind="captions" src="" label="Español" srclang="es">
     <source src="videos/terreno3.mp4" type="video/mp4">
 </video>
 

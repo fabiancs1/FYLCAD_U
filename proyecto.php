@@ -75,7 +75,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['archivo'])) {
                 'z'    => (float)$p[3],
                 'desc' => isset($p[4]) ? trim(implode(' ', array_slice($p, 4))) : '',
             ];
-        } else if (is_numeric($p[0]) && is_numeric($p[1]) && is_numeric($p[2])) {
+        } elseif (is_numeric($p[0]) && is_numeric($p[1]) && is_numeric($p[2])) {
             // X,Y,Z
             $punto = ['x' => (float)$p[0], 'y' => (float)$p[1], 'z' => (float)$p[2], 'desc' => ''];
         } else {
@@ -936,8 +936,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['archivo'])) {
             </div>
           </div>
           <div class="crow">
-            <div class="cfield"><label>Punto A (N°)</label><input type="number" id="calcDistA" placeholder="1" min="1"></div>
-            <div class="cfield"><label>Punto B (N°)</label><input type="number" id="calcDistB" placeholder="10" min="1"></div>
+            <div class="cfield"><label for="calcDistA">Punto A (N°)</label><input type="number" id="calcDistA" placeholder="1" min="1"></div>
+            <div class="cfield"><label for="calcDistB">Punto B (N°)</label><input type="number" id="calcDistB" placeholder="10" min="1"></div>
           </div>
           <div class="tk-pick-hint">💡 O haz <strong>clic en el plano</strong> para seleccionar A y B directamente</div>
           <button class="cbtn cbtn-full" id="btnCalcDist">Calcular →</button>
@@ -974,13 +974,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['archivo'])) {
             </div>
           </div>
           <div class="crow">
-            <div class="cfield"><label>Desde N°</label><input type="number" id="calcPerfilDesde" placeholder="1" min="1"></div>
-            <div class="cfield"><label>Hasta N°</label><input type="number" id="calcPerfilHasta" placeholder="50" min="1"></div>
+            <div class="cfield"><label for="calcPerfilDesde">Desde N°</label><input type="number" id="calcPerfilDesde" placeholder="1" min="1"></div>
+            <div class="cfield"><label for="calcPerfilHasta">Hasta N°</label><input type="number" id="calcPerfilHasta" placeholder="50" min="1"></div>
           </div>
           <div class="csec-mini" style="margin-bottom:6px;">Rasante de proyecto (opcional)</div>
           <div class="crow">
-            <div class="cfield"><label>Cota inicio (m)</label><input type="number" id="perfilRasanteZ1" placeholder="396.500" step="0.001"></div>
-            <div class="cfield"><label>Cota fin (m)</label><input type="number" id="perfilRasanteZ2" placeholder="398.200" step="0.001"></div>
+            <div class="cfield"><label for="perfilRasanteZ1">Cota inicio (m)</label><input type="number" id="perfilRasanteZ1" placeholder="396.500" step="0.001"></div>
+            <div class="cfield"><label for="perfilRasanteZ2">Cota fin (m)</label><input type="number" id="perfilRasanteZ2" placeholder="398.200" step="0.001"></div>
           </div>
           <button class="cbtn cbtn-full" id="btnCalcPerfil">Generar perfil →</button>
           <div class="cres" id="resPerfil" style="display:none;">
@@ -1021,12 +1021,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['archivo'])) {
           </div>
           <div class="csec-mini">Eje de la sección</div>
           <div class="crow">
-            <div class="cfield"><label>Punto centro (N°)</label><input type="number" id="secCentro" placeholder="25" min="1"></div>
-            <div class="cfield"><label>Azimut eje (°)</label><input type="number" id="secAzimut" placeholder="45.0" step="0.1" min="0" max="360"></div>
+            <div class="cfield"><label for="secCentro">Punto centro (N°)</label><input type="number" id="secCentro" placeholder="25" min="1"></div>
+            <div class="cfield"><label for="secAzimut">Azimut eje (°)</label><input type="number" id="secAzimut" placeholder="45.0" step="0.1" min="0" max="360"></div>
           </div>
           <div class="crow">
-            <div class="cfield"><label>Ancho total (m)</label><input type="number" id="secAncho" placeholder="20" value="20" step="0.5" min="1"></div>
-            <div class="cfield"><label>Z proyecto (m)</label><input type="number" id="secZproy" placeholder="auto" step="0.001"></div>
+            <div class="cfield"><label for="secAncho">Ancho total (m)</label><input type="number" id="secAncho" placeholder="20" value="20" step="0.5" min="1"></div>
+            <div class="cfield"><label for="secZproy">Z proyecto (m)</label><input type="number" id="secZproy" placeholder="auto" step="0.001"></div>
           </div>
           <button class="cbtn cbtn-full" id="btnCalcSeccion">Generar sección →</button>
           <div class="cres" id="resSeccion" style="display:none;">
@@ -1060,13 +1060,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['archivo'])) {
             <span>⬡</span> Usando zona de análisis activa
           </div>
           <div class="cfield" style="margin-bottom:8px;">
-            <label>Puntos del polígono (separados por coma)</label>
+            <label for="calcAreaPuntos">Puntos del polígono (separados por coma)</label>
             <input type="text" id="calcAreaPuntos" placeholder="Ej: 1, 5, 12, 18, 25, 1">
           </div>
           <div style="text-align:center;color:#475569;font-size:10px;margin:2px 0 8px;">— o por rango consecutivo —</div>
           <div class="crow">
-            <div class="cfield"><label>Desde N°</label><input type="number" id="calcAreaDesde" placeholder="1"></div>
-            <div class="cfield"><label>Hasta N°</label><input type="number" id="calcAreaHasta" placeholder="50"></div>
+            <div class="cfield"><label for="calcAreaDesde">Desde N°</label><input type="number" id="calcAreaDesde" placeholder="1"></div>
+            <div class="cfield"><label for="calcAreaHasta">Hasta N°</label><input type="number" id="calcAreaHasta" placeholder="50"></div>
           </div>
           <button class="cbtn cbtn-full" id="btnCalcArea">Calcular →</button>
           <div class="cres" id="resArea" style="display:none;">
@@ -1103,8 +1103,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['archivo'])) {
           </div>
           <div class="csec-mini">Parámetros de banca</div>
           <div class="crow">
-            <div class="cfield"><label>Ancho banca (m)</label><input type="number" id="crAncho" placeholder="6.0" value="6" step="0.1" min="0.1"></div>
-            <div class="cfield"><label>Dist. entre secciones (m)</label><input type="number" id="crDistSec" placeholder="20" value="20" step="0.5" min="0.1"></div>
+            <div class="cfield"><label for="crAncho">Ancho banca (m)</label><input type="number" id="crAncho" placeholder="6.0" value="6" step="0.1" min="0.1"></div>
+            <div class="cfield"><label for="crDistSec">Dist. entre secciones (m)</label><input type="number" id="crDistSec" placeholder="20" value="20" step="0.5" min="0.1"></div>
           </div>
           <div class="csec-mini" style="margin-top:4px;">Secciones (terreno N° → cota proyecto)</div>
           <div id="crSecciones">
@@ -1155,16 +1155,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['archivo'])) {
           </div>
           <div class="csec-mini">Zona de análisis</div>
           <div class="crow">
-            <div class="cfield"><label>Puntos polígono (coma) o rango Desde</label><input type="text" id="platPuntos" placeholder="Todos los puntos cargados"></div>
+            <div class="cfield"><label for="platPuntos">Puntos polígono (coma) o rango Desde</label><input type="text" id="platPuntos" placeholder="Todos los puntos cargados"></div>
           </div>
           <div class="crow">
-            <div class="cfield"><label>Desde N°</label><input type="number" id="platDesde" placeholder="1"></div>
-            <div class="cfield"><label>Hasta N°</label><input type="number" id="platHasta" placeholder="todos"></div>
+            <div class="cfield"><label for="platDesde">Desde N°</label><input type="number" id="platDesde" placeholder="1"></div>
+            <div class="cfield"><label for="platHasta">Hasta N°</label><input type="number" id="platHasta" placeholder="todos"></div>
           </div>
           <div class="csec-mini" style="margin-top:4px;">Restricciones opcionales</div>
           <div class="crow">
-            <div class="cfield"><label>Cota mínima (m)</label><input type="number" id="platZmin" placeholder="sin límite" step="0.001"></div>
-            <div class="cfield"><label>Cota máxima (m)</label><input type="number" id="platZmax" placeholder="sin límite" step="0.001"></div>
+            <div class="cfield"><label for="platZmin">Cota mínima (m)</label><input type="number" id="platZmin" placeholder="sin límite" step="0.001"></div>
+            <div class="cfield"><label for="platZmax">Cota máxima (m)</label><input type="number" id="platZmax" placeholder="sin límite" step="0.001"></div>
           </div>
           <button class="cbtn cbtn-full" id="btnCalcPlataforma">Calcular cota óptima →</button>
           <div class="cres" id="resPlataforma" style="display:none;">
@@ -1198,8 +1198,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['archivo'])) {
           </div>
           <div class="csec-mini">Entre dos puntos</div>
           <div class="crow">
-            <div class="cfield"><label>Punto A (N°)</label><input type="number" id="pendPtoA" placeholder="1" min="1"></div>
-            <div class="cfield"><label>Punto B (N°)</label><input type="number" id="pendPtoB" placeholder="10" min="1"></div>
+            <div class="cfield"><label for="pendPtoA">Punto A (N°)</label><input type="number" id="pendPtoA" placeholder="1" min="1"></div>
+            <div class="cfield"><label for="pendPtoB">Punto B (N°)</label><input type="number" id="pendPtoB" placeholder="10" min="1"></div>
           </div>
           <button class="cbtn cbtn-full" id="btnCalcPend">Calcular pendiente →</button>
           <div class="cres" id="resPend" style="display:none;">
@@ -1251,16 +1251,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['archivo'])) {
           </div>
           <div class="csec-mini">Eje de análisis</div>
           <div class="crow">
-            <div class="cfield"><label>Punto inicial (N°)</label><input type="number" id="masaDesde" placeholder="1" min="1"></div>
-            <div class="cfield"><label>Punto final (N°)</label><input type="number" id="masaHasta" placeholder="50" min="1"></div>
+            <div class="cfield"><label for="masaDesde">Punto inicial (N°)</label><input type="number" id="masaDesde" placeholder="1" min="1"></div>
+            <div class="cfield"><label for="masaHasta">Punto final (N°)</label><input type="number" id="masaHasta" placeholder="50" min="1"></div>
           </div>
           <div class="crow">
-            <div class="cfield"><label>Z rasante inicio (m)</label><input type="number" id="masaZ1" placeholder="ej: 396.500" step="0.001"></div>
-            <div class="cfield"><label>Z rasante fin (m)</label><input type="number" id="masaZ2" placeholder="ej: 399.200" step="0.001"></div>
+            <div class="cfield"><label for="masaZ1">Z rasante inicio (m)</label><input type="number" id="masaZ1" placeholder="ej: 396.500" step="0.001"></div>
+            <div class="cfield"><label for="masaZ2">Z rasante fin (m)</label><input type="number" id="masaZ2" placeholder="ej: 399.200" step="0.001"></div>
           </div>
           <div class="crow">
-            <div class="cfield"><label>Esponjamiento (%)</label><input type="number" id="masaEsponj" placeholder="12" value="12" step="1" min="0" max="50"></div>
-            <div class="cfield"><label>Ancho banca (m)</label><input type="number" id="masaBanca" placeholder="6" value="6" step="0.5" min="1"></div>
+            <div class="cfield"><label for="masaEsponj">Esponjamiento (%)</label><input type="number" id="masaEsponj" placeholder="12" value="12" step="1" min="0" max="50"></div>
+            <div class="cfield"><label for="masaBanca">Ancho banca (m)</label><input type="number" id="masaBanca" placeholder="6" value="6" step="0.5" min="1"></div>
           </div>
           <button class="cbtn cbtn-full" id="btnCalcMasa">Generar curva de masa →</button>
           <div class="cres" id="resMasa" style="display:none;">
@@ -1295,13 +1295,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['archivo'])) {
           </div>
           <div class="csec-mini">Punto de desagüe</div>
           <div class="crow">
-            <div class="cfield"><label>Punto desagüe (N°)</label><input type="number" id="drenajeDesague" placeholder="1" min="1"></div>
-            <div class="cfield"><label>Radio análisis (m)</label><input type="number" id="drenajeRadio" placeholder="50" value="50" step="5" min="5"></div>
+            <div class="cfield"><label for="drenajeDesague">Punto desagüe (N°)</label><input type="number" id="drenajeDesague" placeholder="1" min="1"></div>
+            <div class="cfield"><label for="drenajeRadio">Radio análisis (m)</label><input type="number" id="drenajeRadio" placeholder="50" value="50" step="5" min="5"></div>
           </div>
           <div class="csec-mini" style="margin-top:4px;">Parámetros hidrológicos</div>
           <div class="crow">
-            <div class="cfield"><label>Intensidad lluvia (mm/h)</label><input type="number" id="drenajeI" placeholder="80" value="80" step="5" min="10"></div>
-            <div class="cfield"><label>Coef. escorrentía C</label><input type="number" id="drenajeC" placeholder="0.5" value="0.5" step="0.05" min="0.1" max="1.0"></div>
+            <div class="cfield"><label for="drenajeI">Intensidad lluvia (mm/h)</label><input type="number" id="drenajeI" placeholder="80" value="80" step="5" min="10"></div>
+            <div class="cfield"><label for="drenajeC">Coef. escorrentía C</label><input type="number" id="drenajeC" placeholder="0.5" value="0.5" step="0.05" min="0.1" max="1.0"></div>
           </div>
           <button class="cbtn cbtn-full" id="btnCalcDrenaje">Analizar drenaje →</button>
           <div class="cres" id="resDrenaje" style="display:none;">
@@ -1333,7 +1333,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['archivo'])) {
           </div>
           <div class="csec-mini">Ficha completa de un punto</div>
           <div class="crow">
-            <div class="cfield"><label>Número de punto (N°)</label><input type="number" id="coordPtoN" placeholder="42" min="1"></div>
+            <div class="cfield"><label for="coordPtoN">Número de punto (N°)</label><input type="number" id="coordPtoN" placeholder="42" min="1"></div>
             <button class="cbtn" id="btnCoordFicha" style="align-self:flex-end;">Ver ficha →</button>
           </div>
           <div class="cres" id="resCoordFicha" style="display:none;">
@@ -1357,8 +1357,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['archivo'])) {
           </div>
           <div class="csec-mini" style="margin-top:10px;">Buscar punto más cercano a coordenada</div>
           <div class="crow">
-            <div class="cfield"><label>X (Este)</label><input type="number" id="coordBuscarX" placeholder="100.000" step="0.001"></div>
-            <div class="cfield"><label>Y (Norte)</label><input type="number" id="coordBuscarY" placeholder="200.000" step="0.001"></div>
+            <div class="cfield"><label for="coordBuscarX">X (Este)</label><input type="number" id="coordBuscarX" placeholder="100.000" step="0.001"></div>
+            <div class="cfield"><label for="coordBuscarY">Y (Norte)</label><input type="number" id="coordBuscarY" placeholder="200.000" step="0.001"></div>
           </div>
           <button class="cbtn cbtn-full" id="btnCoordBuscarXY">Buscar más cercano →</button>
           <div class="cres" id="resCoordCercano" style="display:none;margin-top:8px;">
@@ -1384,7 +1384,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['archivo'])) {
             </div>
           </div>
           <div class="crow">
-            <div class="cfield"><label>Número de punto (N°)</label><input type="number" id="calcBuscarN" placeholder="42" min="1"></div>
+            <div class="cfield"><label for="calcBuscarN">Número de punto (N°)</label><input type="number" id="calcBuscarN" placeholder="42" min="1"></div>
             <button class="cbtn" id="btnBuscarPunto">Ir →</button>
           </div>
           <div class="cres" id="resBuscar" style="display:none;">
