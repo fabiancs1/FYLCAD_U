@@ -1078,7 +1078,7 @@ body {
                 <ellipse class="tl" cx="340" cy="40"  rx="70"  ry="35"/>
                 <ellipse class="tl" cx="340" cy="40"  rx="42"  ry="21"/>
                 <g fill="#00e5c0" opacity=".3">
-                    <?php for($r=0;$r<6;$r++) for($c=0;$c<10;$c++) echo "<circle cx='".($c*40+20)."' cy='".($r*36+18)."' r='1.2'/>"; ?>
+                    <?php for(\$r=0;\$r<6;\$r++) { for(\$c=0;\$c<10;\$c++) { echo "<circle cx='".((\$c*40+20))."' cy='".((\$r*36+18))."' r='1.2'/>"; } } ?>
                 </g>
             </svg>
             <div class="topo-version">v2.0 · <?= date('Y') ?></div>

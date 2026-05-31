@@ -46,7 +46,7 @@ echo "\n";
 try {
     $client = new SoapClient($wsdlLocal, [
         'location'   => $endpoint,
-        'uri'        => 'http://fylcad.com/service',
+        'uri'        => 'https://fylcad.com/service',
         'trace'      => true,
         'exceptions' => true,
         'encoding'   => 'UTF-8',

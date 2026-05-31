@@ -873,7 +873,7 @@ canvas:active { cursor:grabbing; }
 ============================================= */
 
 /* Calc panes necesitan su propio padding cuando el panel-body tiene padding:0 */
-.calc-pane.active { padding: 14px 16px; }
+
 
 /* Tab de pendiente — tabla de clasificación */
 .pend-badge-wrap { text-align: center; padding: 10px 0 8px; }

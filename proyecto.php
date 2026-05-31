@@ -57,9 +57,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['archivo'])) {
 
     foreach ($lineas as $linea) {
         $linea = trim($linea);
-        if ($linea === '' || $linea[0] === '#') continue;
+        if ($linea === '' || $linea[0] === '#') { continue; }
         $p = preg_split('/[\s,;]+/', $linea);
-        if (count($p) < 3) continue;
+        if (count($p) < 3) { continue; }
 
         // Detectar formato: N,X,Y,Z,DESC  o  X,Y,Z
         if (count($p) >= 4
@@ -82,9 +82,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['archivo'])) {
             continue;
         }
 
-        if ($punto['x'] == 0 && $punto['y'] == 0) continue;
+        if (\$punto['x'] == 0 && \$punto['y'] == 0) { continue; }
         $puntos[] = $punto;
-        if (count($puntos) >= $limite) break;
+        if (count($puntos) >= $limite) { break; }
     }
     echo json_encode($puntos); exit;
 }

@@ -75,12 +75,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['accion']) && $_POST['
             $errores[] = "Formato no permitido. Usa JPG, PNG, WEBP o GIF.";
         } else {
             $uploadDir = __DIR__ . '/uploads/avatares/';
-            if (!is_dir($uploadDir)) mkdir($uploadDir, 0755, true);
+            if (!is_dir($uploadDir)) { mkdir($uploadDir, 0755, true); }
 
             // Borrar foto anterior si existe
             if (!empty($usuario['foto_perfil'])) {
                 $oldFile = $uploadDir . basename($usuario['foto_perfil']);
-                if (file_exists($oldFile)) unlink($oldFile);
+                if (file_exists($oldFile)) { unlink($oldFile); }
             }
 
             $newName  = 'avatar_' . $usuarioId . '_' . time() . '.' . ($extMap[$ext] ?? $ext);
@@ -112,7 +112,7 @@ $actStmt = $db->prepare("SELECT tipo, COUNT(*) as total FROM actividad WHERE usu
 $actStmt->execute([$usuarioId]);
 $actRaw = $actStmt->fetchAll();
 $act = [];
-foreach($actRaw as $r) $act[$r['tipo']] = (int)$r['total'];
+foreach(\$actRaw as \$r) { \$act[\$r['tipo']] = (int)\$r['total']; }
 
 $cotStmt = $db->prepare("SELECT COUNT(*) AS total FROM cotizaciones WHERE usuario_id = ?");
 $cotStmt->execute([$usuarioId]);
@@ -140,8 +140,8 @@ $niveles = [
   ['Maestro','Leyenda de la topografía',4000,99999,'🏅'],
 ];
 $nivelActual = $niveles[0];
-foreach($niveles as $nv){
-  if($xp >= $nv[2]) $nivelActual = $nv;
+foreach(\$niveles as \$nv) {
+  if(\$xp >= \$nv[2]) { \$nivelActual = \$nv; }
 }
 $xpSig = $nivelActual[3];
 $xpPct = $xpSig > 0 ? min(100, round(($xp - $nivelActual[2]) / ($xpSig - $nivelActual[2]) * 100)) : 100;

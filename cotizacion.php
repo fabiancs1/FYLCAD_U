@@ -404,12 +404,6 @@ textarea.inp{resize:vertical;min-height:48px;font-size:10px;line-height:1.6;}
 }
 
 /* ── Totbar mejorada ── */
-.totbar{
-  background:linear-gradient(0deg,rgba(0,0,0,.4),rgba(10,17,32,.97));
-  border-top:1px solid rgba(0,229,192,.12);
-  padding:10px 16px;flex-shrink:0;
-  position:relative;
-}
 .totbar::before{
   content:'';position:absolute;top:0;left:0;right:0;height:1px;
   background:linear-gradient(90deg,transparent,rgba(0,229,192,.4),transparent);
@@ -479,12 +473,6 @@ textarea.inp{resize:vertical;min-height:48px;font-size:10px;line-height:1.6;}
 .apu-sec-sub.updated{animation:flipNum .4s ease-out;}
 
 /* ── Resumen mejorado ── */
-.res-grand{
-  background:linear-gradient(135deg,rgba(0,229,192,.08),rgba(0,229,192,.02),rgba(59,130,246,.04));
-  border:1px solid rgba(0,229,192,.2);border-radius:12px;padding:18px 22px;
-  display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;
-  position:relative;overflow:hidden;
-}
 .res-grand::before{
   content:'';position:absolute;top:-50%;right:-30%;width:200px;height:200px;
   background:radial-gradient(circle,rgba(0,229,192,.06),transparent 70%);
