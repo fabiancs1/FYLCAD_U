@@ -78,7 +78,7 @@ if (isset($_GET['proyecto']) && is_numeric($_GET['proyecto'])) {
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>FYLCAD — Cotización<?= $proyDB ? ' · '.htmlspecialchars($proyDB['nombre']) : '' ?></title>
 <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" crossorigin>
+<link referrerpolicy="no-referrer" href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" crossorigin>
 <style>
 :root{
   --bg:#060A12; --bg2:#0a1120; --surf:#0f1a2e; --surf2:#111d35;

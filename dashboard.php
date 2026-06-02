@@ -97,7 +97,7 @@ $iniciales    = strtoupper(substr($usuario['nombre'], 0, 2));
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" crossorigin>
+    <link referrerpolicy="no-referrer" href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" crossorigin>
     <style>
 /* =============================================
    FYLCAD — dashboard_v2.css  (Bento Layout)
