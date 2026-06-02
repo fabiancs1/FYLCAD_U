@@ -1,39 +1,58 @@
-# FYLCAD — Guía de despliegue en VPS
+<?xml version="1.0" encoding="UTF-8"?>
+<xsl:stylesheet version="1.0"
+  xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
-## Requisitos del servidor
-- PHP 8.2+
-- MySQL 8.0+ o MariaDB 10.4+
-- Apache 2.4+ o Nginx
-- Extensiones PHP: pdo, pdo_mysql, curl, json, mbstring
+  <xsl:output method="html" encoding="UTF-8" indent="yes"/>
 
-## Pasos para desplegar
+  <xsl:template match="/fylcad-message">
+    <html>
+      <head>
+        <title>FYLCAD - Resultado Topográfico</title>
+        <style>
+          body { font-family: Arial, sans-serif; padding: 20px; background: #f4f4f4; }
+          h2   { color: #2c3e50; }
+          table{ border-collapse: collapse; width: 50%; background: white; }
+          th   { background: #2c3e50; color: white; padding: 10px; }
+          td   { padding: 8px 12px; border: 1px solid #ccc; }
+          tr:nth-child(even){ background: #ecf0f1; }
+          .error { color: red; font-weight: bold; }
+          .footer{ margin-top: 20px; font-size: 12px; color: #888; }
+        </style>
+      </head>
+      <body>
+        <h2>FYLCAD — Resultado del Procesamiento Topográfico</h2>
 
-### 1. Subir archivos
-Sube todo el contenido de esta carpeta a `/var/www/html/fylcad` en la VPS.
+        <p><strong>Estado:</strong> <xsl:value-of select="status"/></p>
 
-### 2. Configurar entorno
-Edita el archivo `config/env.php` con tus credenciales reales:
-- DB_USER → tu usuario de MySQL
-- DB_PASS → tu contraseña de MySQL
-- APP_URL → tu dominio (ej: https://fylcad.com)
+        <xsl:if test="data/results">
+          <table>
+            <tr><th>Métrica</th><th>Valor</th></tr>
+            <tr><td>Puntos procesados</td>
+                <td><xsl:value-of select="data/results/puntos"/></td></tr>
+            <tr><td>Área (m²)</td>
+                <td><xsl:value-of select="data/results/area"/></td></tr>
+            <tr><td>Volumen (m³)</td>
+                <td><xsl:value-of select="data/results/volumen"/></td></tr>
+            <tr><td>Cota mínima (m)</td>
+                <td><xsl:value-of select="data/results/cota_min"/></td></tr>
+            <tr><td>Cota máxima (m)</td>
+                <td><xsl:value-of select="data/results/cota_max"/></td></tr>
+            <tr><td>Desnivel (m)</td>
+                <td><xsl:value-of select="data/results/desnivel"/></td></tr>
+          </table>
+        </xsl:if>
 
-### 3. Importar base de datos
-```bash
-mysql -u tu_usuario -p fylcad_db < fylcad_db.sql
-```
+        <xsl:if test="message">
+          <p class="error">
+            <strong>Error:</strong> <xsl:value-of select="message"/>
+          </p>
+        </xsl:if>
 
-### 4. Permisos de carpetas
-```bash
-chmod 755 uploads/avatares
-chmod 755 PNG/PDF/guardar
-```
+        <p class="footer">
+          Generado: <xsl:value-of select="control/timestamp"/>
+        </p>
+      </body>
+    </html>
+  </xsl:template>
 
-### 5. SSL (HTTPS)
-```bash
-apt install certbot python3-certbot-apache
-certbot --apache -d tudominio.com
-```
-
-### 6. Verificar
-- Abre tu dominio en el navegador
-- Prueba login, registro y carga de proyectos
+</xsl:stylesheet>

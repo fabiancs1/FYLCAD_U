@@ -1,0 +1,522 @@
+/* ═══════════════════════════════════════════════
+   FYLCAD — Mejoras Globales de todas las vistas
+   Archivo: css/global_mejoras.css
+   Mood: Dark sci-fi topográfico, igual al index
+═══════════════════════════════════════════════ */
+
+/* ── Variables globales unificadas ── */
+:root {
+    --glow-teal:   rgba(0,229,192,0.15);
+    --glow-purple: rgba(124,58,237,0.12);
+    --glow-blue:   rgba(59,130,246,0.12);
+    --radius-lg:   16px;
+    --radius-md:   10px;
+    --radius-sm:   6px;
+    --transition:  all 0.25s cubic-bezier(.22,1,.36,1);
+}
+
+/* ══════════════════════════════════════
+   AUTH — login, register, forgot, reset
+══════════════════════════════════════ */
+
+/* Fondo mejorado con partículas SVG */
+.auth-bg::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(ellipse at 20% 50%, rgba(0,229,192,0.04) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 20%, rgba(124,58,237,0.05) 0%, transparent 50%),
+        radial-gradient(ellipse at 60% 80%, rgba(59,130,246,0.04) 0%, transparent 50%);
+    pointer-events: none;
+}
+
+/* Grid de fondo sutil */
+.auth-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(0,229,192,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,229,192,0.025) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+}
+
+/* Logo mejorado */
+.auth-logo {
+    font-size: 24px !important;
+    letter-spacing: 5px !important;
+    text-shadow: 0 0 30px rgba(0,229,192,0.3);
+    position: relative;
+}
+
+.auth-logo::after {
+    content: '// TOPOGRAFÍA DIGITAL';
+    display: block;
+    font-size: 9px;
+    letter-spacing: 3px;
+    color: rgba(0,229,192,0.4);
+    font-family: 'DM Mono', monospace;
+    font-weight: 400;
+    text-align: center;
+    margin-top: 4px;
+}
+
+/* Card con glassmorphism */
+.auth-card {
+    background: rgba(12,17,32,0.85) !important;
+    backdrop-filter: blur(20px) !important;
+    border: 1px solid rgba(0,229,192,0.1) !important;
+    box-shadow:
+        0 32px 80px rgba(0,0,0,0.6),
+        0 0 0 1px rgba(255,255,255,0.03),
+        inset 0 1px 0 rgba(255,255,255,0.05) !important;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Línea superior de acento */
+.auth-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(0,229,192,0.5), transparent);
+}
+
+/* Título de la card */
+.auth-card-header h1 {
+    background: linear-gradient(135deg, #ffffff 0%, rgba(255,255,255,0.75) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Inputs mejorados */
+.input-wrap input {
+    background: rgba(255,255,255,0.04) !important;
+    border: 1px solid rgba(255,255,255,0.08) !important;
+    border-radius: 10px !important;
+    transition: var(--transition) !important;
+    font-size: 14px !important;
+}
+
+.input-wrap input:focus {
+    background: rgba(255,255,255,0.07) !important;
+    border-color: rgba(0,229,192,0.45) !important;
+    box-shadow: 0 0 0 4px rgba(0,229,192,0.06), 0 0 20px rgba(0,229,192,0.08) !important;
+}
+
+.input-icon { opacity: 0.4 !important; }
+
+/* Botón submit con shimmer */
+.btn-submit {
+    background: linear-gradient(135deg, #00e5c0, #00c4a7) !important;
+    border-radius: 12px !important;
+    font-size: 14px !important;
+    letter-spacing: 0.5px !important;
+    position: relative;
+    overflow: hidden;
+    transition: var(--transition) !important;
+}
+
+.btn-submit::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.45), transparent);
+    transition: left 0.5s;
+}
+
+.btn-submit:hover::before { left: 100%; }
+
+.btn-submit:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 8px 30px rgba(0,229,192,0.35) !important;
+}
+
+/* Plan selector mejorado */
+.plan-option {
+    border-radius: 12px !important;
+    transition: var(--transition) !important;
+}
+
+.plan-option.active {
+    box-shadow: 0 0 20px rgba(0,229,192,0.1) !important;
+}
+
+/* Alertas mejoradas */
+.alert {
+    border-radius: 10px !important;
+    backdrop-filter: blur(8px);
+}
+
+.alert-success {
+    background: rgba(0,229,192,0.06) !important;
+    border-left: 3px solid rgba(0,229,192,0.5) !important;
+}
+
+.alert-error {
+    background: rgba(239,68,68,0.06) !important;
+    border-left: 3px solid rgba(239,68,68,0.5) !important;
+}
+
+/* ══════════════════════════════════════
+   DASHBOARD
+══════════════════════════════════════ */
+
+/* Topbar mejorada */
+.topbar {
+    background: rgba(5,8,15,0.92) !important;
+    backdrop-filter: blur(20px) !important;
+    border-bottom: 1px solid rgba(0,229,192,0.08) !important;
+    box-shadow: 0 1px 30px rgba(0,0,0,0.3) !important;
+}
+
+.topbar::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(0,229,192,0.3), transparent);
+    pointer-events: none;
+}
+
+.topbar-dashboard { position: relative; }
+
+/* Logo topbar */
+.topbar-logo {
+    text-shadow: 0 0 20px rgba(0,229,192,0.25);
+    letter-spacing: 4px !important;
+}
+
+/* Nav items */
+.tnav-item {
+    transition: var(--transition) !important;
+    border-radius: 8px !important;
+}
+
+.tnav-item.active {
+    box-shadow: 0 0 15px rgba(0,229,192,0.1) !important;
+}
+
+/* Avatar */
+.topbar-avatar {
+    background: linear-gradient(135deg, #00e5c0, #3b82f6) !important;
+    border-radius: 10px !important;
+    box-shadow: 0 2px 12px rgba(0,229,192,0.2) !important;
+}
+
+/* Dropdown */
+.topbar-dropdown {
+    border: 1px solid rgba(0,229,192,0.1) !important;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.03) !important;
+    backdrop-filter: blur(20px) !important;
+    background: rgba(12,17,32,0.95) !important;
+}
+
+/* Bento cards */
+.bento-card {
+    border: 1px solid rgba(255,255,255,0.06) !important;
+    transition: var(--transition) !important;
+    position: relative;
+    overflow: hidden;
+}
+
+.bento-card::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent);
+    pointer-events: none;
+}
+
+.bento-card:hover {
+    border-color: rgba(0,229,192,0.15) !important;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.4), 0 0 0 1px rgba(0,229,192,0.06) !important;
+    transform: translateY(-2px) !important;
+}
+
+/* Card welcome */
+.card-welcome {
+    background: linear-gradient(135deg, #0c1120 0%, #080d1a 100%) !important;
+}
+
+/* Stats */
+.stat-num {
+    text-shadow: 0 0 20px currentColor;
+}
+
+/* ══════════════════════════════════════
+   PLANES
+══════════════════════════════════════ */
+
+/* Header planes */
+.header {
+    backdrop-filter: blur(20px) !important;
+    background: rgba(5,8,15,0.9) !important;
+    border-bottom: 1px solid rgba(0,229,192,0.08) !important;
+}
+
+/* Hero planes */
+.plans-hero {
+    position: relative;
+    overflow: hidden;
+}
+
+.plans-hero::before {
+    content: '';
+    position: absolute;
+    top: -50%; left: 50%;
+    transform: translateX(-50%);
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(0,229,192,0.06) 0%, transparent 65%);
+    pointer-events: none;
+}
+
+/* Cards de planes */
+.plan-card {
+    transition: var(--transition) !important;
+    position: relative;
+    overflow: hidden;
+}
+
+.plan-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(0,229,192,0.3), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.plan-card:hover::before { opacity: 1; }
+
+.plan-card:hover {
+    transform: translateY(-4px) !important;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5), 0 0 0 1px rgba(0,229,192,0.1) !important;
+}
+
+.plan-card.featured {
+    border-color: rgba(0,229,192,0.3) !important;
+    box-shadow: 0 0 40px rgba(0,229,192,0.08) !important;
+}
+
+/* Precios */
+.plan-price {
+    text-shadow: 0 0 30px rgba(0,229,192,0.3);
+}
+
+/* Botones de planes */
+.btn-plan {
+    transition: var(--transition) !important;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-plan::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%; width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);
+    transition: left 0.4s;
+}
+
+.btn-plan:hover::before { left: 100%; }
+.btn-plan:hover { transform: translateY(-1px) !important; }
+
+/* ══════════════════════════════════════
+   MIS PROYECTOS
+══════════════════════════════════════ */
+
+.project-card {
+    border: 1px solid rgba(255,255,255,0.06) !important;
+    transition: var(--transition) !important;
+    position: relative;
+}
+
+.project-card:hover {
+    border-color: rgba(0,229,192,0.15) !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.4) !important;
+}
+
+.project-card::before {
+    transition: opacity 0.3s !important;
+}
+
+.project-card:hover::before { opacity: 1 !important; }
+
+.btn-open {
+    transition: var(--transition) !important;
+    border-radius: 8px !important;
+}
+
+.btn-open:hover {
+    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 15px rgba(0,229,192,0.3) !important;
+}
+
+.btn-cot {
+    transition: var(--transition) !important;
+    border-radius: 8px !important;
+}
+
+.btn-del {
+    transition: var(--transition) !important;
+    border-radius: 8px !important;
+}
+
+/* Search input */
+.search-input:focus {
+    border-color: rgba(0,229,192,0.35) !important;
+    box-shadow: 0 0 0 3px rgba(0,229,192,0.06) !important;
+}
+
+/* ══════════════════════════════════════
+   PERFIL
+══════════════════════════════════════ */
+
+/* Secciones del perfil */
+.perfil-section,
+.section-block,
+[class*="section"] {
+    border-radius: 14px !important;
+}
+
+/* Formulario del perfil */
+.perfil-form input:focus,
+.perfil-form select:focus,
+.perfil-form textarea:focus {
+    border-color: rgba(0,229,192,0.4) !important;
+    box-shadow: 0 0 0 3px rgba(0,229,192,0.06) !important;
+}
+
+/* XP bar */
+#topoXpBar {
+    background: linear-gradient(90deg, #00e5c0, #3b82f6) !important;
+    box-shadow: 0 0 10px rgba(0,229,192,0.3) !important;
+    transition: width 1s cubic-bezier(.22,1,.36,1) !important;
+}
+
+/* Logros */
+.logro-item {
+    transition: var(--transition) !important;
+}
+
+.logro-item:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3) !important;
+}
+
+/* ══════════════════════════════════════
+   GLOBAL — Scrollbars, selección, focus
+══════════════════════════════════════ */
+
+/* Scrollbar global */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+    background: rgba(0,229,192,0.15);
+    border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(0,229,192,0.3);
+}
+
+/* Selección de texto */
+::selection {
+    background: rgba(0,229,192,0.6);
+    color: #000000; /* Dark text on teal for better contrast */
+}
+
+/* Focus visible global */
+:focus-visible {
+    outline: 2px solid rgba(0,229,192,0.5);
+    outline-offset: 2px;
+    border-radius: 4px;
+}
+
+/* Transición suave entre páginas */
+body {
+    animation: pageIn 0.3s ease forwards;
+}
+
+@keyframes pageIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Tooltip global mejorado */
+[title]:hover::after {
+    content: attr(title);
+    position: absolute;
+    bottom: calc(100% + 6px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(12,17,32,0.95);
+    border: 1px solid rgba(0,229,192,0.15);
+    color: #e8edf5;
+    font-size: 11px;
+    padding: 4px 10px;
+    border-radius: 6px;
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 9999;
+    backdrop-filter: blur(8px);
+}
+
+/* Números con fuente monospace consistente */
+.font-mono,
+[class*="val"],
+[class*="num"],
+[class*="precio"],
+[class*="total"] {
+    font-family: 'DM Mono', monospace !important;
+}
+
+/* Badges globales */
+[class*="badge"],
+[class*="plan"] {
+    letter-spacing: 0.3px;
+}
+
+/* Toast / notificaciones */
+[class*="toast"],
+[class*="alert"] {
+    border-radius: 10px !important;
+}
+
+/* ══════════════════════════════════════
+   MICRO-INTERACCIONES
+══════════════════════════════════════ */
+
+/* Botones con efecto de presión */
+button:active:not(:disabled),
+a.btn:active,
+[class*="btn"]:active:not(:disabled) {
+    transform: scale(0.97) !important;
+}
+
+/* Links de navegación */
+a[href]:not([class*="btn"]):not([class*="logo"]):not([class*="nav"]) {
+    transition: color 0.2s;
+}
+
+/* Inputs global */
+input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
+select,
+textarea {
+    transition: border-color 0.2s, box-shadow 0.2s, background 0.2s !important;
+}
+
+/* Disabled states */
+:disabled,
+[disabled] {
+    opacity: 0.45 !important;
+    cursor: not-allowed !important;
+}

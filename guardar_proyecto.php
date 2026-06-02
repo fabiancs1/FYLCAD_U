@@ -1,148 +1,206 @@
 <?php
 /**
- * FYLCAD — Plataforma de Topografía Digital
- * Copyright (c) 2026 Fabian Eduardo Rodriguez Hernandez
- * Todos los derechos reservados.
- * Uso no autorizado prohibido.
+ * FYLCAD — Servidor XML con Bind al Registry
+ * Archivo: xml/xml_server.php
+ * Guía 8 — Actividades 2, 3, 4
+ *
+ * Mismo flujo que socket_server.php pero recibe XML,
+ * lo valida contra el XSD, extrae datos con XPath
+ * y responde en formato XML.
  */
 
-/* =============================================
-   FYLCAD — Guardar proyecto en DB
-   Archivo: guardar_proyecto.php
-   Método: POST (JSON)
-============================================= */
-session_start();
-require_once 'config/db.php';
+$host           = '0.0.0.0';
+$puerto         = 9001;          // puerto distinto al original (9000)
+$registryIP     = '127.0.0.1';
+$registryPuerto = 9999;
+$nombreServicio = 'fylcad.topografia';   // nombre lógico distinto
 
-header('Content-Type: application/json');
+echo "============================================\n";
+echo "  FYLCAD — Servidor XML\n";
+echo "  Escuchando en {$host}:{$puerto}\n";
+echo "============================================\n\n";
 
-// Verificar sesión
-if (!isset($_SESSION['usuario_id'])) {
-    echo json_encode(['ok' => false, 'error' => 'No autenticado.']);
-    exit;
-}
+// ── Crear y bindear socket ────────────────────────────────
+$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+socket_set_option($socket, SOL_SOCKET, SO_REUSEADDR, 1);
+socket_bind($socket, $host, $puerto);
+socket_listen($socket, 5);
 
-$usuarioId  = $_SESSION['usuario_id'];
-$usuarioPlan = $_SESSION['usuario_plan'] ?? 'free';
+// ── BIND al Registry ──────────────────────────────────────
+echo "[BIND] Registrando '{$nombreServicio}' en el Registry...\n";
+$bindOk = hacerBind($registryIP, $registryPuerto, $nombreServicio, '127.0.0.1', $puerto);
+echo $bindOk
+    ? "[BIND] Servicio registrado correctamente.\n\n"
+    : "[BIND] ADVERTENCIA: No se pudo registrar. Continuando de todas formas.\n\n";
 
-// Recibir JSON del cuerpo
-$body = json_decode(file_get_contents('php://input'), true);
-if (!$body) {
-    echo json_encode(['ok' => false, 'error' => 'Datos inválidos.']);
-    exit;
-}
+echo "[SERVIDOR XML] Esperando conexiones...\n";
 
-$nombre      = trim($body['nombre']      ?? 'Proyecto sin nombre');
-$puntos      = $body['puntos']           ?? [];
-$metricas    = $body['metricas']         ?? [];
-$cotizacion  = $body['cotizacion']       ?? [];
-$archivoNom  = trim($body['archivo']     ?? '');
+// ── Bucle principal ───────────────────────────────────────
+while (true) {
+    $cliente = socket_accept($socket);
+    if ($cliente === false) { continue; }
 
-// Validar límite plan free
-if ($usuarioPlan === 'free' && count($puntos) > 50) {
-    echo json_encode([
-        'ok'    => false,
-        'error' => 'El plan Free admite hasta 50 puntos. Actualiza a Premium para guardar archivos más grandes.'
-    ]);
-    exit;
-}
+    socket_getpeername($cliente, $clienteIP);
+    echo "\n[HANDSHAKE OK] Cliente conectado desde: {$clienteIP}\n";
 
-if (empty($puntos)) {
-    echo json_encode(['ok' => false, 'error' => 'No hay puntos para guardar.']);
-    exit;
-}
+    $datos = trim(socket_read($cliente, 4096, PHP_NORMAL_READ));
+    echo "[RECIBIDO XML]\n{$datos}\n";
 
-try {
-    $db = getDB();
-    $db->beginTransaction();
-
-    // 1) Crear proyecto
-    $stmt = $db->prepare("
-        INSERT INTO proyectos (
-            usuario_id, nombre, archivo_nombre,
-            total_puntos, total_triangulos,
-            area_m2, perimetro_m, volumen_m3,
-            cota_min, cota_max, desnivel,
-            centroide_x, centroide_y, centroide_z,
-            estado
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'completo')
-    ");
-    $stmt->execute([
-        $usuarioId,
-        $nombre,
-        $archivoNom,
-        count($puntos),
-        $metricas['triangulos']  ?? 0,
-        $metricas['area']        ?? 0,
-        $metricas['perimetro']   ?? 0,
-        $metricas['volumen']     ?? 0,
-        $metricas['zMin']        ?? 0,
-        $metricas['zMax']        ?? 0,
-        $metricas['desnivel']    ?? 0,
-        $metricas['centroideX']  ?? 0,
-        $metricas['centroideY']  ?? 0,
-        $metricas['centroideZ']  ?? 0,
-    ]);
-    $proyectoId = $db->lastInsertId();
-
-    // 2) Guardar CSV de puntos
-    $csv = "X,Y,Z\n";
-    foreach ($puntos as $p) {
-        $csv .= "{$p['x']},{$p['y']},{$p['z']}\n";
-    }
-    $stmt2 = $db->prepare("
-        INSERT INTO archivos (proyecto_id, nombre, contenido, tamano_kb)
-        VALUES (?, ?, ?, ?)
-    ");
-    $stmt2->execute([
-        $proyectoId,
-        $archivoNom ?: 'coordenadas.csv',
-        $csv,
-        round(strlen($csv) / 1024, 2)
-    ]);
-
-    // 3) Guardar cotización si existe
-    if (!empty($cotizacion)) {
-        $stmt3 = $db->prepare("
-            INSERT INTO cotizaciones (
-                proyecto_id, usuario_id,
-                tarifa_tierra, tarifa_nivelacion, tarifa_cerramiento,
-                costo_tierra, costo_nivelacion, costo_cerramiento, total
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-        ");
-        $stmt3->execute([
-            $proyectoId,
-            $usuarioId,
-            $cotizacion['tarifaTierra']      ?? 8.5,
-            $cotizacion['tarifaNivelacion']  ?? 3.2,
-            $cotizacion['tarifaCerramiento'] ?? 45,
-            $cotizacion['costoTierra']       ?? 0,
-            $cotizacion['costoNivelacion']   ?? 0,
-            $cotizacion['costoCerramiento']  ?? 0,
-            $cotizacion['total']             ?? 0,
-        ]);
+    // ── Actividad 2: Validar XML contra XSD ──────────────
+    if (!validarXML($datos)) {
+        $respuesta = construirErrorXML('Mensaje XML inválido o no cumple el esquema XSD');
+        socket_write($cliente, $respuesta . "\n", strlen($respuesta) + 1);
+        echo "[ENVIADO ERROR]\n{$respuesta}\n";
+        socket_close($cliente);
+        continue;
     }
 
-    // 4) Registrar actividad
-    $stmt4 = $db->prepare("
-        INSERT INTO actividad (usuario_id, proyecto_id, tipo, descripcion)
-        VALUES (?, ?, 'proyecto_creado', ?)
-    ");
-    $stmt4->execute([
-        $usuarioId,
-        $proyectoId,
-        "Proyecto \"{$nombre}\" guardado con " . count($puntos) . " puntos."
-    ]);
+    // ── Actividad 4: Extraer datos con XPath ─────────────
+    $resultado = procesarConXPath($datos);
+    $operacion = $resultado['operacion'];
+    $puntos    = $resultado['puntos'];
 
-    $db->commit();
+    echo "[OPERACION] {$operacion}\n";
 
-    echo json_encode([
-        'ok'         => true,
-        'proyecto_id'=> $proyectoId,
-        'mensaje'    => "Proyecto \"{$nombre}\" guardado correctamente."
-    ]);
+    // ── Procesar según operación ──────────────────────────
+    switch (strtolower($operacion)) {
 
-} catch (Exception $e) {
-    $db->rollBack();
-    echo json_encode(['ok' => false, 'error' => 'Error al guardar. Intenta de nuevo.']);
+        case 'calcular':
+            if (count($puntos) < 3) {
+                $respuesta = construirErrorXML('Se necesitan al menos 3 puntos');
+            } else {
+                $area     = calcularArea($puntos);
+                $volumen  = calcularVolumen($puntos);
+                $cotaMin  = min(array_column($puntos, 'z'));
+                $cotaMax  = max(array_column($puntos, 'z'));
+                $desnivel = round($cotaMax - $cotaMin, 2);
+                $respuesta = construirResponseXML([
+                    'puntos'   => count($puntos),
+                    'area'     => round($area, 2),
+                    'volumen'  => round($volumen, 2),
+                    'cota_min' => $cotaMin,
+                    'cota_max' => $cotaMax,
+                    'desnivel' => $desnivel,
+                ]);
+            }
+            break;
+
+        case 'ping':
+            $respuesta = construirResponseXML(['mensaje' => "Servidor FYLCAD XML activo en puerto {$puerto}"]);
+            break;
+
+        default:
+            $respuesta = construirErrorXML("Operación desconocida: {$operacion}");
+            break;
+    }
+
+    socket_write($cliente, $respuesta . "\n", strlen($respuesta) + 1);
+    echo "[ENVIADO]\n{$respuesta}\n";
+
+    socket_close($cliente);
+    echo "[CERRADO] Conexión con {$clienteIP} cerrada.\n";
+}
+
+socket_close($socket);
+
+// ══════════════════════════════════════════════
+// FUNCIONES
+// ══════════════════════════════════════════════
+
+/**
+ * Actividad 2: Valida el XML contra el esquema XSD
+ */
+function validarXML(string $xmlString): bool {
+    $dom = new DOMDocument();
+    if (!@$dom->loadXML($xmlString)) { return false; }
+    $xsdPath = __DIR__ . '/fylcad_protocol.xsd';
+    return @$dom->schemaValidate($xsdPath);
+}
+
+/**
+ * Actividad 4: Extrae operación y puntos usando XPath
+ */
+function procesarConXPath(string $xmlString): array {
+    $dom = new DOMDocument();
+    $dom->loadXML($xmlString);
+    $xpath = new DOMXPath($dom);
+
+    $operacion = $xpath->query('/fylcad-message/operation')->item(0)->nodeValue ?? '';
+
+    $nodos  = $xpath->query('/fylcad-message/data/points/point');
+    $puntos = [];
+    foreach ($nodos as $nodo) {
+        $puntos[] = [
+            'x' => (float)$xpath->query('x', $nodo)->item(0)->nodeValue,
+            'y' => (float)$xpath->query('y', $nodo)->item(0)->nodeValue,
+            'z' => (float)$xpath->query('z', $nodo)->item(0)->nodeValue,
+        ];
+    }
+
+    return ['operacion' => $operacion, 'puntos' => $puntos];
+}
+
+/**
+ * Actividad 1: Construye respuesta XML exitosa
+ */
+function construirResponseXML(array $resultados): string {
+    $xml  = '<?xml version="1.0" encoding="UTF-8"?>';
+    $xml .= '<fylcad-message>';
+    $xml .= '<status>success</status>';
+    $xml .= '<data><results>';
+    foreach ($resultados as $clave => $valor) {
+        $xml .= "<{$clave}>{$valor}</{$clave}>";
+    }
+    $xml .= '</results></data>';
+    $xml .= '<control><timestamp>' . date('c') . '</timestamp></control>';
+    $xml .= '</fylcad-message>';
+    return $xml;
+}
+
+/**
+ * Actividad 1: Construye respuesta XML de error
+ */
+function construirErrorXML(string $mensaje): string {
+    $xml  = '<?xml version="1.0" encoding="UTF-8"?>';
+    $xml .= '<fylcad-message>';
+    $xml .= '<status>error</status>';
+    $xml .= "<message>{$mensaje}</message>";
+    $xml .= '<control><timestamp>' . date('c') . '</timestamp></control>';
+    $xml .= '</fylcad-message>';
+    return $xml;
+}
+
+/**
+ * Cálculos topográficos — igual que socket_server.php
+ */
+function calcularArea(array $puntos): float {
+    $n = count($puntos); $area = 0.0;
+    for ($i = 0; $i < $n; $i++) {
+        $j     = ($i + 1) % $n;
+        $area += $puntos[$i]['x'] * $puntos[$j]['y'];
+        $area -= $puntos[$j]['x'] * $puntos[$i]['y'];
+    }
+    return abs($area) / 2.0;
+}
+
+function calcularVolumen(array $puntos): float {
+    $area      = calcularArea($puntos);
+    $cotaMedia = array_sum(array_column($puntos, 'z')) / count($puntos);
+    $cotaBase  = min(array_column($puntos, 'z'));
+    return $area * max($cotaMedia - $cotaBase, 0);
+}
+
+/**
+ * BIND al Registry — igual que socket_server.php
+ */
+function hacerBind(string $registryIP, int $registryPuerto, string $nombre, string $ip, int $puerto): bool {
+    $sock = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+    if (!socket_connect($sock, $registryIP, $registryPuerto)) {
+        socket_close($sock); return false;
+    }
+    $msg = "BIND|{$nombre}|{$ip}|{$puerto}\n";
+    socket_write($sock, $msg, strlen($msg));
+    $resp = trim(socket_read($sock, 512, PHP_NORMAL_READ));
+    socket_close($sock);
+    return strpos($resp, 'OK') === 0;
 }

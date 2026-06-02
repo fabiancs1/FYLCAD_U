@@ -1,422 +1,429 @@
 <?php
 /**
- * FYLCAD — Plataforma de Topografía Digital
- * Copyright (c) 2026 Fabian Eduardo Rodriguez Hernandez
- * Todos los derechos reservados.
- * Uso no autorizado prohibido.
+ * CASO TESTIGO — Guía Práctica N°6
+ * Prueba de integración: objeto de negocio → DAO → MySQL → confirmación en pantalla
+ *
+ * Flujo demostrado:
+ *   1. Se instancia un objeto Proyecto con datos de prueba
+ *   2. Se llama a ProyectoDAO::crear() para persistirlo (usa Singleton Database)
+ *   3. Se consulta el registro recién insertado (READ)
+ *   4. Se actualiza el estado del proyecto             (UPDATE)
+ *   5. Se elimina el registro de prueba               (DELETE)
+ *   Cada paso muestra el mensaje de confirmación o error de MySQL en pantalla.
  */
 
-/* =============================================
-   FYLCAD — Planes y Precios
-   Archivo: planes.php
-============================================= */
-session_start();
-$logueado     = isset($_SESSION['usuario_id']);
-$planActual   = $_SESSION['usuario_plan'] ?? null;
-$nombreUsuario = $_SESSION['usuario_nombre'] ?? null;
+// ── Autoload de dependencias ──────────────────────────────────────
+require_once __DIR__ . '/app/Core/Database.php';
+require_once __DIR__ . '/app/Core/Proyecto.php';
+require_once __DIR__ . '/app/Core/Actividad.php';
+require_once __DIR__ . '/app/Data/ProyectoDAO.php';
+require_once __DIR__ . '/app/Data/ActividadDAO.php';
+
+// ── Colores y helpers de presentación ────────────────────────────
+$OK  = COLOR_ACCENT;
+$ERR = '#ff4d6d';
+$INF = '#6366f1';
+
+function bloque(string $titulo, bool $exito, string $detalle, string $extra = ''): void {
+    $color = $exito ? COLOR_ACCENT : '#ff4d6d';
+    $icono = $exito ? '✅' : '❌';
+    echo "
+    <div class='paso'>
+        <div class='paso-header' style='border-left:4px solid $color'>
+            <span class='icono'>$icono</span>
+            <strong>$titulo</strong>
+        </div>
+        <pre class='detalle'>$detalle</pre>
+        " . ($extra ? "<div class='extra'>$extra</div>" : "") . "
+    </div>";
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <title>FYLCAD — Planes y Precios</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" crossorigin>
-    <link rel="stylesheet" href="css/planes.css">
-    <link rel="stylesheet" href="css/responsive.css">
-    <link rel="stylesheet" href="css/global_mejoras.css">
+<meta charset="UTF-8">
+<title>FYLCAD — Caso Testigo Guía N°6</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link referrerpolicy="no-referrer" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=DM+Mono&display=swap" rel="stylesheet" crossorigin>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #0d1117;
+    color: #e6edf3;
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    padding: 40px 20px;
+  }
+
+  .container { max-width: 860px; margin: 0 auto; }
+
+  /* ── Header ── */
+  .header {
+    display: flex; align-items: center; gap: 16px;
+    margin-bottom: 36px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid #21262d;
+  }
+  .logo { font-size: 28px; font-weight: 700; letter-spacing: -1px; color: #fff; }
+  .logo span { color: #00e5c0; }
+  .badge {
+    background: #00e5c020;
+    border: 1px solid #00e5c040;
+    color: #00e5c0;
+    font-size: 12px;
+    padding: 4px 10px;
+    border-radius: 20px;
+  }
+
+  /* ── Meta info ── */
+  .meta-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+    margin-bottom: 32px;
+  }
+  .meta-card {
+    background: #161b22;
+    border: 1px solid #21262d;
+    border-radius: 10px;
+    padding: 14px 18px;
+  }
+  .meta-card .label { font-size: 11px; color: #8b949e; text-transform: uppercase; letter-spacing: .5px; }
+  .meta-card .value { font-size: 14px; color: #e6edf3; margin-top: 4px; }
+
+  /* ── Sección ── */
+  .seccion-titulo {
+    font-size: 13px;
+    font-weight: 600;
+    color: #8b949e;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 32px 0 16px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .seccion-titulo::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: #21262d;
+  }
+
+  /* ── Paso ── */
+  .paso {
+    background: #161b22;
+    border: 1px solid #21262d;
+    border-radius: 10px;
+    margin-bottom: 14px;
+    overflow: hidden;
+  }
+  .paso-header {
+    display: flex; align-items: center; gap: 12px;
+    padding: 14px 18px;
+    background: #0d1117;
+  }
+  .icono { font-size: 18px; }
+  .paso-header strong { font-size: 15px; }
+
+  pre.detalle {
+    font-family: 'DM Mono', monospace;
+    font-size: 12.5px;
+    line-height: 1.7;
+    color: #c9d1d9;
+    background: #161b22;
+    padding: 14px 20px;
+    overflow-x: auto;
+    white-space: pre-wrap;
+  }
+  .extra {
+    padding: 10px 18px 14px;
+    font-size: 13px;
+    color: #8b949e;
+    border-top: 1px solid #21262d;
+  }
+
+  /* ── Resumen final ── */
+  .resumen {
+    background: #161b22;
+    border: 1px solid #21262d;
+    border-radius: 10px;
+    padding: 24px;
+    margin-top: 32px;
+    text-align: center;
+  }
+  .resumen .total { font-size: 36px; font-weight: 800; color: #00e5c0; }
+  .resumen .subtexto { color: #8b949e; font-size: 13px; margin-top: 6px; }
+
+  .footer-note {
+    text-align: center;
+    color: #30363d;
+    font-size: 12px;
+    margin-top: 40px;
+  }
+</style>
 </head>
 <body>
+<div class="container">
 
-<!-- ==================== HEADER ==================== -->
-<header class="header" id="header">
-    <a href="index.php" class="logo">FYL<span>CAD</span></a>
+  <!-- ── Header ── -->
+  <div class="header">
+    <div class="logo">FYL<span>CAD</span></div>
+    <div class="badge">Caso Testigo — Guía N°6</div>
+  </div>
 
-    <nav aria-label="Navegación principal" class="nav">
-        <a href="index.php">Inicio</a>
-        <a href="planes.php" class="active">Planes</a>
-       
-    </nav>
-
-    <div class="header-actions">
-        <?php if ($logueado): ?>
-            <a href="dashboard.php" class="btn btn-ghost">← Dashboard</a>
-            <a href="proyecto.php" class="btn btn-accent">Ir al módulo 3D</a>
-        <?php else: ?>
-            <a href="login.php"    class="btn btn-ghost">Iniciar sesión</a>
-            <a href="register.php" class="btn btn-accent">Crear cuenta <span>→</span></a>
-        <?php endif; ?>
+  <!-- ── Meta ── -->
+  <div class="meta-grid">
+    <div class="meta-card">
+      <div class="label">Asignatura</div>
+      <div class="value">Arquitectura y Diseño de Software</div>
     </div>
-</header>
-
-<!-- ==================== HERO PLANES ==================== -->
-<section class="plans-hero">
-    <div class="plans-hero-inner">
-        <span class="section-label">Precios</span>
-        <h1>Simple, transparente,<br>sin sorpresas.</h1>
-        <p>Empieza gratis y escala cuando lo necesites.<br>Sin contratos, cancela cuando quieras.</p>
-
-        <!-- Toggle mensual / anual -->
-        <div class="billing-toggle">
-            <span class="billing-opt active" id="optMensual">Mensual</span>
-            <div class="toggle-switch" id="billingSwitch">
-                <div class="toggle-thumb"></div>
-            </div>
-            <span class="billing-opt" id="optAnual">
-                Anual <span class="save-badge">-20%</span>
-            </span>
-        </div>
+    <div class="meta-card">
+      <div class="label">Docente</div>
+      <div class="value">Robinson Damián Gómez Sánchez</div>
     </div>
-</section>
-
-<!-- ==================== PLANES ==================== -->
-<section class="plans-section">
-    <div class="plans-grid">
-
-        <!-- Plan Free -->
-        <div class="plan-card">
-            <div class="plan-top">
-                <div class="plan-icon">◈</div>
-                <h2 class="plan-name">Free</h2>
-                <p class="plan-tagline">Para explorar y aprender</p>
-            </div>
-
-            <div class="plan-price-wrap">
-                <div class="plan-price">
-                    <span class="price-currency">$</span>
-                    <span class="price-amount">0</span>
-                </div>
-                <span class="price-period">para siempre</span>
-            </div>
-
-            <?php if ($logueado && $planActual === 'free'): ?>
-                <div class="plan-current-badge">✓ Tu plan actual</div>
-            <?php else: ?>
-                <a href="register.php" class="plan-btn plan-btn-outline">
-                    Empezar gratis →
-                </a>
-            <?php endif; ?>
-
-            <ul class="plan-features">
-                <li class="feat-yes">Módulo 3D completo</li>
-                <li class="feat-yes">Hasta <strong>50 puntos</strong> por archivo</li>
-                <li class="feat-yes">Triangulación Delaunay</li>
-                <li class="feat-yes">Curvas de nivel</li>
-                <li class="feat-yes">Métricas básicas (área, perímetro)</li>
-                <li class="feat-yes">Cotización con tarifas editables</li>
-                <li class="feat-yes">Vista 3D y 2D</li>
-                <li class="feat-no">Exportar PNG / PDF</li>
-                <li class="feat-no">Puntos ilimitados</li>
-                <li class="feat-no">Historial de proyectos</li>
-                <li class="feat-no">Comparación de capas</li>
-                <li class="feat-no">Soporte prioritario</li>
-            </ul>
-        </div>
-
-        <!-- Plan Pro (destacado) -->
-        <div class="plan-card plan-card-featured">
-            <div class="plan-badge-top">Más popular</div>
-
-            <div class="plan-top">
-                <div class="plan-icon">★</div>
-                <h2 class="plan-name">Pro</h2>
-                <p class="plan-tagline">Para profesionales activos</p>
-            </div>
-
-            <div class="plan-price-wrap">
-                <div class="plan-price">
-                    <span class="price-currency">$</span>
-                    <span class="price-amount" id="proPrecio">9</span>
-                    <span class="price-cents" id="proCents">.99</span>
-                </div>
-                <span class="price-period" id="proPeriodo">/ mes</span>
-            </div>
-
-            <?php if ($logueado && $planActual === 'premium'): ?>
-                <div class="plan-current-badge featured">✓ Tu plan actual</div>
-            <?php else: ?>
-                <a href="#proximamente" class="plan-btn plan-btn-accent" id="btnProCTA">
-                    Próximamente →
-                </a>
-            <?php endif; ?>
-
-            <ul class="plan-features">
-                <li class="feat-yes">Todo lo del plan Free</li>
-                <li class="feat-yes"><strong>Puntos ilimitados</strong></li>
-                <li class="feat-yes">Exportar plano como <strong>PNG y PDF</strong></li>
-                <li class="feat-yes">Historial de <strong>proyectos guardados</strong></li>
-                <li class="feat-yes">Comparación de 2 capas (corte/relleno)</li>
-                <li class="feat-yes">Cálculo de volumen de corte y relleno</li>
-                <li class="feat-yes">Exportar tabla de coordenadas</li>
-                <li class="feat-yes">Cotización en PDF con membrete</li>
-                <li class="feat-yes">Soporte por email prioritario</li>
-                <li class="feat-no">API access</li>
-                <li class="feat-no">Múltiples usuarios</li>
-                <li class="feat-no">Marca blanca</li>
-            </ul>
-        </div>
-
-        <!-- Plan Enterprise -->
-        <div class="plan-card">
-            <div class="plan-top">
-                <div class="plan-icon">⬡</div>
-                <h2 class="plan-name">Enterprise</h2>
-                <p class="plan-tagline">Para equipos y empresas</p>
-            </div>
-
-            <div class="plan-price-wrap">
-                <div class="plan-price plan-price-custom">
-                    <span class="price-amount-custom">A medida</span>
-                </div>
-                <span class="price-period">según necesidades</span>
-            </div>
-
-            <a href="mailto:contacto@fylcad.com" class="plan-btn plan-btn-outline">
-                Contactar ventas →
-            </a>
-
-            <ul class="plan-features">
-                <li class="feat-yes">Todo lo del plan Pro</li>
-                <li class="feat-yes"><strong>Múltiples usuarios</strong></li>
-                <li class="feat-yes">Acceso a <strong>API REST</strong></li>
-                <li class="feat-yes">Integración con AutoCAD / QGIS</li>
-                <li class="feat-yes">Dashboard administrativo</li>
-                <li class="feat-yes">Reportes personalizados</li>
-                <li class="feat-yes">Marca blanca (white label)</li>
-                <li class="feat-yes">SLA garantizado</li>
-                <li class="feat-yes">Soporte dedicado 24/7</li>
-                <li class="feat-yes">Onboarding personalizado</li>
-                <li class="feat-yes">Facturación empresarial</li>
-                <li class="feat-yes">Servidor dedicado opcional</li>
-            </ul>
-        </div>
-
+    <div class="meta-card">
+      <div class="label">Integrantes</div>
+      <div class="value">Emmely Lorena Gutiérrez · Fabian Eduardo Rodríguez</div>
     </div>
-</section>
-
-<!-- ==================== COMPARACIÓN ==================== -->
-<section class="compare-section">
-    <div class="compare-inner">
-        <span class="section-label">Comparación detallada</span>
-        <h2>¿Qué incluye cada plan?</h2>
-
-        <div class="compare-table-wrap">
-            <table class="compare-table">
-                <thead>
-                    <tr>
-                        <th>Característica</th>
-                        <th>Free</th>
-                        <th class="th-featured">Pro</th>
-                        <th>Enterprise</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr class="compare-group"><td colspan="4">Módulo 3D</td></tr>
-                    <tr>
-                        <td>Visualización 3D / 2D</td>
-                        <td>✓</td><td class="td-featured">✓</td><td>✓</td>
-                    </tr>
-                    <tr>
-                        <td>Triangulación Delaunay</td>
-                        <td>✓</td><td class="td-featured">✓</td><td>✓</td>
-                    </tr>
-                    <tr>
-                        <td>Curvas de nivel</td>
-                        <td>✓</td><td class="td-featured">✓</td><td>✓</td>
-                    </tr>
-                    <tr>
-                        <td>Puntos por archivo</td>
-                        <td>50</td><td class="td-featured">∞</td><td>∞</td>
-                    </tr>
-                    <tr class="compare-group"><td colspan="4">Cálculos y métricas</td></tr>
-                    <tr>
-                        <td>Área y perímetro</td>
-                        <td>✓</td><td class="td-featured">✓</td><td>✓</td>
-                    </tr>
-                    <tr>
-                        <td>Volumen estimado</td>
-                        <td>✓</td><td class="td-featured">✓</td><td>✓</td>
-                    </tr>
-                    <tr>
-                        <td>Corte y relleno</td>
-                        <td>—</td><td class="td-featured">✓</td><td>✓</td>
-                    </tr>
-                    <tr>
-                        <td>Cotización editable</td>
-                        <td>✓</td><td class="td-featured">✓</td><td>✓</td>
-                    </tr>
-                    <tr class="compare-group"><td colspan="4">Exportación</td></tr>
-                    <tr>
-                        <td>Exportar CSV</td>
-                        <td>✓</td><td class="td-featured">✓</td><td>✓</td>
-                    </tr>
-                    <tr>
-                        <td>Exportar PNG</td>
-                        <td>—</td><td class="td-featured">✓</td><td>✓</td>
-                    </tr>
-                    <tr>
-                        <td>Exportar PDF con membrete</td>
-                        <td>—</td><td class="td-featured">✓</td><td>✓</td>
-                    </tr>
-                    <tr class="compare-group"><td colspan="4">Proyectos y cuenta</td></tr>
-                    <tr>
-                        <td>Proyectos guardados</td>
-                        <td>—</td><td class="td-featured">✓</td><td>✓</td>
-                    </tr>
-                    <tr>
-                        <td>Historial</td>
-                        <td>—</td><td class="td-featured">✓</td><td>✓</td>
-                    </tr>
-                    <tr>
-                        <td>Múltiples usuarios</td>
-                        <td>—</td><td class="td-featured">—</td><td>✓</td>
-                    </tr>
-                    <tr>
-                        <td>API REST</td>
-                        <td>—</td><td class="td-featured">—</td><td>✓</td>
-                    </tr>
-                    <tr class="compare-group"><td colspan="4">Soporte</td></tr>
-                    <tr>
-                        <td>Soporte por email</td>
-                        <td>—</td><td class="td-featured">✓</td><td>✓</td>
-                    </tr>
-                    <tr>
-                        <td>Soporte 24/7</td>
-                        <td>—</td><td class="td-featured">—</td><td>✓</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+    <div class="meta-card">
+      <div class="label">Objetivo</div>
+      <div class="value">Flujo completo: objeto de negocio → DAO → MySQL</div>
     </div>
-</section>
+  </div>
 
-<!-- ==================== FAQ ==================== -->
-<section class="faq-section">
-    <div class="faq-inner">
-        <span class="section-label">FAQ</span>
-        <h2>Preguntas frecuentes</h2>
+<?php
 
-        <div class="faq-grid">
-            <?php
-            $faqs = [
-                ["¿Puedo cambiar de plan en cualquier momento?",
-                 "Sí. Puedes actualizar o bajar tu plan cuando quieras. Los cambios se aplican inmediatamente."],
-                ["¿Qué pasa si supero el límite de 50 puntos en Free?",
-                 "El módulo procesará hasta 50 puntos y mostrará una advertencia. Para archivos más grandes necesitas el plan Pro."],
-                ["¿Necesito tarjeta de crédito para el plan Free?",
-                 "No. El plan Free es completamente gratuito y no requiere ningún método de pago."],
-                ["¿Cómo funciona la facturación anual?",
-                 "Al elegir facturación anual obtienes un 20% de descuento. Se cobra un solo pago por adelantado por 12 meses."],
-                ["¿Mis datos están seguros?",
-                 "Sí. Los archivos CSV se procesan en memoria y no se almacenan en nuestros servidores. Solo guardamos las métricas calculadas."],
-                ["¿Puedo cancelar en cualquier momento?",
-                 "Sí. Sin contratos ni cargos por cancelación. Al cancelar conservas acceso hasta el fin del período pagado."],
-            ];
-            foreach ($faqs as [$q, $a]) { ?>
-            <div class="faq-item">
-                <button class="faq-q">
-                    <span><?= $q ?></span>
-                    <span class="faq-arrow">↓</span>
-                </button>
-                <div class="faq-a">
-                    <p><?= $a ?></p>
-                </div>
-            </div>
-            <?php } ?>
-        </div>
-    </div>
-</section>
+$pasos_ok = 0;
+$pasos_total = 0;
 
-<!-- ==================== CTA FINAL ==================== -->
-<section class="cta-section">
-    <div class="cta-inner">
-        <h2>Empieza hoy, gratis.</h2>
-        <p>Sin tarjeta de crédito. Sin límite de tiempo en el plan Free.</p>
-        <div class="cta-buttons">
-            <a href="register.php" class="btn btn-accent btn-lg">
-                Crear cuenta gratuita →
-            </a>
-            <a href="proyecto.php" class="btn btn-outline btn-lg">
-                Ver demostración
-            </a>
-        </div>
-    </div>
-</section>
 
-<!-- ==================== FOOTER ==================== -->
-<footer class="footer">
-    <div class="footer-logo">FYLCAD</div>
-    <p>© 2026 FYLCAD — Ingeniería Digital</p>
-    <nav aria-label="Navegación secundaria" class="footer-links">
-        <a href="#">Privacidad</a>
-        <a href="#">Términos</a>
-        <a href="mailto:contacto@fylcad.com">Contacto</a>
-    </nav>
-</footer>
+echo "<div class='seccion-titulo'>Conexión</div>";
+$pasos_total++;
+try {
+    $db  = Database::getInstance();
+    $pdo = $db->getConnection();
 
-<script>
-/* ── Header scroll ── */
-const header = document.getElementById("header");
-window.addEventListener("scroll", () => {
-    header.classList.toggle("scrolled", window.scrollY > 20);
-});
+    // Verificar que realmente es la misma instancia (Singleton)
+    $db2 = Database::getInstance();
+    $esMismaInstancia = ($db === $db2);
 
-/* ── Toggle facturación mensual / anual ── */
-const switchEl   = document.getElementById("billingSwitch");
-const optMensual = document.getElementById("optMensual");
-const optAnual   = document.getElementById("optAnual");
-const proPrecio  = document.getElementById("proPrecio");
-const proCents   = document.getElementById("proCents");
-const proPeriodo = document.getElementById("proPeriodo");
-let esAnual = false;
+    bloque(
+        'SINGLETON — Conexión PDO activa',
+        true,
+        "Database::getInstance() devuelve: " . get_class($db) . "\n" .
+        "Segunda llamada retorna la misma instancia: " . ($esMismaInstancia ? 'SÍ (Singleton confirmado ✓)' : 'NO') . "\n" .
+        "Driver PDO: " . $pdo->getAttribute(PDO::ATTR_DRIVER_NAME) . "\n" .
+        "Motor MySQL: " . $pdo->getAttribute(PDO::ATTR_SERVER_VERSION),
+        'El patrón Singleton garantiza una única conexión a la BD durante todo el ciclo de vida de la petición.'
+    );
+    $pasos_ok++;
 
-switchEl.addEventListener("click", () => {
-    esAnual = !esAnual;
-    switchEl.classList.toggle("active", esAnual);
-    optMensual.classList.toggle("active", !esAnual);
-    optAnual.classList.toggle("active",   esAnual);
+} catch (Exception $e) {
+    bloque('SINGLETON — Conexión PDO', false,
+        "Error: " . $e->getMessage(),
+        'Verificar credenciales en /config/db.php y que MySQL esté activo.'
+    );
+}
 
-    if (esAnual) {
-        proPrecio.textContent  = "7";
-        proCents.textContent   = ".99";
-        proPeriodo.textContent = "/ mes · facturado anualmente";
-    } else {
-        proPrecio.textContent  = "9";
-        proCents.textContent   = ".99";
-        proPeriodo.textContent = "/ mes";
+
+echo "<div class='seccion-titulo'>CREATE — Objeto de negocio → Base de datos</div>";
+$pasos_total++;
+$proyectoId = null;
+
+try {
+    
+    $proyecto = new Proyecto();
+    $proyecto->setUsuarioId(2);                    // Fabian (usuario existente en seeders)
+    $proyecto->setNombre('Caso Testigo — Guía N°6');
+    $proyecto->setDescripcion('Proyecto de prueba creado por la simulación de integración.');
+    $proyecto->setArchivoNombre('caso_testigo.csv');
+    $proyecto->setTotalPuntos(350);
+    $proyecto->setTotalTriangulos(698);
+    $proyecto->setAreaM2(5420.75);
+    $proyecto->setPerimetroM(298.40);
+    $proyecto->setVolumenM3(8340.22);
+    $proyecto->setCotaMin(370.10);
+    $proyecto->setCotaMax(384.90);
+    $proyecto->setDesnivel(14.80);
+    $proyecto->setCentroideX(1384810.500000);
+    $proyecto->setCentroideY(1136450.750000);
+    $proyecto->setCentroideZ(377.50);
+    $proyecto->setEstado('borrador');
+
+    
+    $dao = new ProyectoDAO();
+    $proyectoId = $dao->crear($proyecto);
+
+    bloque(
+        'CREATE — ProyectoDAO::crear()',
+        $proyectoId > 0,
+        "Objeto instanciado: Proyecto\n" .
+        "  → nombre        : " . $proyecto->getNombre() . "\n" .
+        "  → usuario_id    : " . $proyecto->getUsuarioId() . "\n" .
+        "  → total_puntos  : " . $proyecto->getTotalPuntos() . "\n" .
+        "  → area_m2       : " . $proyecto->getAreaM2() . " m²\n" .
+        "  → volumen_m3    : " . $proyecto->getVolumenM3() . " m³\n" .
+        "  → estado        : " . $proyecto->getEstado() . "\n\n" .
+        "Resultado MySQL → lastInsertId(): " . $proyectoId,
+        "INSERT ejecutado correctamente. ID asignado por AUTO_INCREMENT: <strong style='color:#00e5c0'>$proyectoId</strong>"
+    );
+    $pasos_ok++;
+
+} catch (PDOException $e) {
+    bloque('CREATE — ProyectoDAO::crear()', false,
+        PDO_EX_PREFIX . $e->getMessage()
+    );
+}
+
+
+echo "<div class='seccion-titulo'>READ — Consulta del registro insertado</div>";
+$pasos_total++;
+$proyectoLeido = null;
+
+try {
+    $dao = new ProyectoDAO();
+    $proyectoLeido = $dao->obtenerPorId($proyectoId);
+    $encontrado = $proyectoLeido !== null;
+
+    bloque(
+        'READ — ProyectoDAO::obtenerPorId(' . $proyectoId . ')',
+        $encontrado,
+        $encontrado
+            ? "Registro recuperado desde MySQL:\n" .
+              "  id              : " . $proyectoLeido->getId() . "\n" .
+              "  nombre          : " . $proyectoLeido->getNombre() . "\n" .
+              "  descripcion     : " . $proyectoLeido->getDescripcion() . "\n" .
+              "  area_m2         : " . $proyectoLeido->getAreaM2() . " m²\n" .
+              "  volumen_m3      : " . $proyectoLeido->getVolumenM3() . " m³\n" .
+              "  desnivel        : " . $proyectoLeido->getDesnivel() . " m\n" .
+              "  estado          : " . $proyectoLeido->getEstado() . "\n" .
+              "  creado_en       : " . $proyectoLeido->getCreadoEn()
+            : "No se encontró el registro con id=$proyectoId",
+        $encontrado ? 'Objeto Proyecto hidratado correctamente desde la fila SQL (PDO::FETCH_ASSOC).' : ''
+    );
+    $pasos_ok++;
+
+} catch (PDOException $e) {
+    bloque('READ — ProyectoDAO::obtenerPorId()', false,
+        PDO_EX_PREFIX . $e->getMessage()
+    );
+}
+
+
+echo "<div class='seccion-titulo'>UPDATE — Modificación del estado del proyecto</div>";
+$pasos_total++;
+
+try {
+    if ($proyectoLeido) {
+        $estadoAntes = $proyectoLeido->getEstado();
+        $proyectoLeido->setEstado('completo');
+        $proyectoLeido->setDescripcion('Proyecto actualizado tras procesamiento del caso testigo.');
+
+        $dao = new ProyectoDAO();
+        $actualizado = $dao->actualizar($proyectoLeido);
+
+        bloque(
+            'UPDATE — ProyectoDAO::actualizar()',
+            $actualizado,
+            "Campo modificado: estado\n" .
+            "  Antes  : $estadoAntes\n" .
+            "  Después: " . $proyectoLeido->getEstado() . "\n\n" .
+            "rowCount() retornó: " . ($actualizado ? '1 fila afectada' : '0 filas afectadas'),
+            $actualizado
+                ? 'UPDATE ejecutado. PDO::rowCount() confirmó la modificación en MySQL.'
+                : 'No se afectaron filas. Verificar que el ID exista.'
+        );
+        $pasos_ok++;
     }
-});
 
-/* ── FAQ accordion ── */
-document.querySelectorAll(".faq-q").forEach(btn => {
-    btn.addEventListener("click", () => {
-        const item   = btn.parentElement;
-        const answer = item.querySelector(".faq-a");
-        const arrow  = btn.querySelector(".faq-arrow");
-        const open   = item.classList.contains("open");
-
-        // Cerrar todos
-        document.querySelectorAll(".faq-item").forEach(i => {
-            i.classList.remove("open");
-            i.querySelector(".faq-a").style.maxHeight  = "0";
-            i.querySelector(".faq-arrow").style.transform = "rotate(0deg)";
-        });
-
-        // Abrir el clickeado si estaba cerrado
-        if (!open) {
-            item.classList.add("open");
-            answer.style.maxHeight     = answer.scrollHeight + "px";
-            arrow.style.transform      = "rotate(180deg)";
-        }
-    });
-});
-</script>
+} catch (PDOException $e) {
+    bloque('UPDATE — ProyectoDAO::actualizar()', false,
+        PDO_EX_PREFIX . $e->getMessage()
+    );
+}
 
 
-    <!-- Chatbot FYLCAD -->
-    <link rel="stylesheet" href="css/chatbot.css">
-    <script src="js/chatbot.js" defer></script>
+echo "<div class='seccion-titulo'>CREATE (Bitácora) — Registro en tabla actividad</div>";
+$pasos_total++;
+
+try {
+    $actividad = new Actividad();
+    $actividad->setUsuarioId(2);
+    $actividad->setProyectoId($proyectoId);
+    $actividad->setTipo('proyecto_creado');
+    $actividad->setDescripcion('Caso testigo Guía N°6 — insertado y procesado correctamente.');
+    $actividad->setMeta(json_encode(['origen' => 'caso_testigo.php', 'guia' => 6]));
+
+    $actDAO = new ActividadDAO();
+    $actId  = $actDAO->crear($actividad);
+
+    bloque(
+        'ActividadDAO::crear() — Bitácora de auditoría',
+        $actId > 0,
+        "Objeto instanciado: Actividad\n" .
+        "  usuario_id  : " . $actividad->getUsuarioId() . "\n" .
+        "  proyecto_id : " . $actividad->getProyectoId() . "\n" .
+        "  tipo        : " . $actividad->getTipo() . "\n" .
+        "  descripcion : " . $actividad->getDescripcion() . "\n" .
+        "  meta        : " . $actividad->getMeta() . "\n\n" .
+        "Resultado MySQL → ID de actividad: $actId",
+        'El flujo de datos pasó correctamente: objeto de negocio → ActividadDAO → Singleton Database → MySQL.'
+    );
+    $pasos_ok++;
+
+} catch (PDOException $e) {
+    bloque('ActividadDAO::crear()', false,
+        PDO_EX_PREFIX . $e->getMessage()
+    );
+}
+
+
+echo "<div class='seccion-titulo'>DELETE — Limpieza del registro de prueba</div>";
+$pasos_total++;
+
+try {
+    $dao = new ProyectoDAO();
+    $eliminado = $dao->eliminar($proyectoId);
+
+    bloque(
+        'DELETE — ProyectoDAO::eliminar(' . $proyectoId . ')',
+        $eliminado,
+        "DELETE FROM proyectos WHERE id = $proyectoId\n\n" .
+        "rowCount() retornó: " . ($eliminado ? '1 fila eliminada' : '0 filas afectadas') . "\n" .
+        "Nota: las FK con ON DELETE CASCADE eliminaron automáticamente\n" .
+        "      el registro asociado en la tabla `actividad`.",
+        $eliminado
+            ? 'Registro de prueba eliminado. La integridad referencial (CASCADE) actuó correctamente.'
+            : 'No se encontró el registro a eliminar.'
+    );
+    $pasos_ok++;
+
+} catch (PDOException $e) {
+    bloque('DELETE — ProyectoDAO::eliminar()', false,
+        PDO_EX_PREFIX . $e->getMessage()
+    );
+}
+
+
+$color_total = $pasos_ok === $pasos_total ? COLOR_ACCENT : '#f59e0b';
+echo "
+<div class='resumen'>
+  <div class='total' style='color:$color_total'>$pasos_ok / $pasos_total</div>
+  <div class='subtexto'>pasos completados correctamente</div>
+  <div style='margin-top:18px; font-size:13px; color:#8b949e; line-height:1.8'>
+    Flujo validado: <strong style='color:#e6edf3'>Objeto de Negocio</strong>
+    → <strong style='color:#e6edf3'>DAO (/app/Data/)</strong>
+    → <strong style='color:#e6edf3'>Singleton Database</strong>
+    → <strong style='color:#e6edf3'>MySQL (fylcad_db)</strong>
+  </div>
+</div>
+";
+
+?>
+
+  <div class="footer-note">
+    FYLCAD · Guía Práctica N°6 · Arquitectura y Diseño de Software · FESC 2026
+  </div>
+
+</div>
 </body>
 </html>

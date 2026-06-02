@@ -97,7 +97,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['archivo'])) {
 <title>FYLCAD — Módulo Topográfico</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" crossorigin>
+<link referrerpolicy="no-referrer" href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" crossorigin>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" integrity="sha512-qZvrmS2ekKPF2mSznTQsxqPgnpkI4DNTlrdUmTzrDgektczlKNRRhy5X5AAOnx5S09ydFYWWNSfYEqiaeo58Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <link rel="stylesheet" href="css/proyecto.css?v=8">
 <style>
@@ -1114,8 +1114,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['archivo'])) {
               <button class="cbtn-sec cr-del" style="padding:5px 8px;align-self:flex-end;display:none;">✕</button>
             </div>
             <div class="cr-sec-row">
-              <div class="cfield" style="flex:0.8"><label for="cr-pto">Punto N°</label><input id="cr-pto" class="cr-pto" type="number" placeholder="10"></div>
-              <div class="cfield"><label for="cr-zp">Z proyecto (m)</label><input id="cr-zp" class="cr-zp" type="number" placeholder="396.800" step="0.001"></div>
+              <div class="cfield" style="flex:0.8"><label for="cr-pto-2">Punto N°</label><input id="cr-pto-2" class="cr-pto" type="number" placeholder="10"></div>
+              <div class="cfield"><label for="cr-zp-2">Z proyecto (m)</label><input id="cr-zp-2" class="cr-zp" type="number" placeholder="396.800" step="0.001"></div>
               <button class="cbtn-sec cr-del" style="padding:5px 8px;align-self:flex-end;">✕</button>
             </div>
           </div>
