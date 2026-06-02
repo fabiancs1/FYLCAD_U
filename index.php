@@ -969,9 +969,9 @@ if (isset($_SESSION["usuario_id"])) {
 
     <!-- Puntos de video -->
     <div class="video-dots">
-        <div role="button" tabindex="0" class="video-dot active" onkeydown="if(event.key==='Enter'||event.key===' ')this.click()" onclick="cambiarVideo(0)"></div>
-        <div role="button" tabindex="0" class="video-dot" onkeydown="if(event.key==='Enter'||event.key===' ')this.click()" onclick="cambiarVideo(1)"></div>
-        <div role="button" tabindex="0" class="video-dot" onkeydown="if(event.key==='Enter'||event.key===' ')this.click()" onclick="cambiarVideo(2)"></div>
+        <button class="video-dot active" onkeydown="if(event.key==='Enter'||event.key===' ')this.click()" onclick="cambiarVideo(0)"></div>
+        <button class="video-dot" onkeydown="if(event.key==='Enter'||event.key===' ')this.click()" onclick="cambiarVideo(1)"></div>
+        <button class="video-dot" onkeydown="if(event.key==='Enter'||event.key===' ')this.click()" onclick="cambiarVideo(2)"></div>
     </div>
 
     <div class="hero-bottom-line"></div>

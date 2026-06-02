@@ -98,7 +98,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div style="background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.2);border-radius:8px;padding:12px;margin-bottom:16px;">
             <p style="font-size:11px;color:#f59e0b;margin-bottom:6px;">⚠ MODO DESARROLLO — en producción esto llegaría por email:</p>
             <a href="<?= htmlspecialchars($_SESSION['dev_reset_link']) ?>"
-               style="font-size:11px;color:#00e5c0;word-break:break-all;">
+               style="font-size:11px;color:#00e5c0;word-break:break-all;" aria-label="Enlace de recuperación">
                <?= htmlspecialchars($_SESSION['dev_reset_link']) ?>
             </a>
         </div>

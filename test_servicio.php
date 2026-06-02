@@ -78,7 +78,9 @@ if ($persistencia['ok']) {
         ");
         $stmt->execute([':id' => $persistencia['actividad_id']]);
         $ultimaActividad = $stmt->fetch();
-    } catch (Exception $e) {}
+    } catch (Exception $e) {
+        error_log('Actividad no encontrada: ' . $e->getMessage());
+    }
 }
 
 // ── Calcular estadísticas globales ───────────────────────
@@ -179,7 +181,10 @@ $elevProm    = $elevaciones ? round(array_sum($elevaciones)/count($elevaciones),
   <div class="step <?= $resultados !== null ? 'done' : 'fail' ?>">JSON → PHP Objects</div><div class="arrow">→</div>
   <div class="step <?= $persistencia['ok'] ? 'done' : 'fail' ?>">Database::getInstance()</div><div class="arrow">→</div>
   <div class="step <?= $persistencia['ok'] ? 'done' : 'fail' ?>">MySQL INSERT actividad</div><div class="arrow">→</div>
-  <div class="step <?= $persistencia['proyecto_actualizado'] ? 'done' : ($persistencia['ok'] ? 'step' : 'fail') ?>">MySQL UPDATE proyectos</div>
+<?php
+$_stepClass = $persistencia['proyecto_actualizado'] ? 'done' : ($persistencia['ok'] ? 'step' : 'fail');
+?>
+  <div class="step <?= $_stepClass ?>">MySQL UPDATE proyectos</div>
 </div>
 
 <!-- ── MÉTRICAS GLOBALES ─────────────────────────────── -->

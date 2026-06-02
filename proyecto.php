@@ -1109,13 +1109,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['archivo'])) {
           <div class="csec-mini" style="margin-top:4px;">Secciones (terreno N° → cota proyecto)</div>
           <div id="crSecciones">
             <div class="cr-sec-row">
-              <div class="cfield" style="flex:0.8"><label>Punto N°</label><input class="cr-pto" type="number" placeholder="5"></div>
-              <div class="cfield"><label>Z proyecto (m)</label><input class="cr-zp" type="number" placeholder="396.500" step="0.001"></div>
+              <div class="cfield" style="flex:0.8"><label for="cr-pto">Punto N°</label><input id="cr-pto" class="cr-pto" type="number" placeholder="5"></div>
+              <div class="cfield"><label for="cr-zp">Z proyecto (m)</label><input id="cr-zp" class="cr-zp" type="number" placeholder="396.500" step="0.001"></div>
               <button class="cbtn-sec cr-del" style="padding:5px 8px;align-self:flex-end;display:none;">✕</button>
             </div>
             <div class="cr-sec-row">
-              <div class="cfield" style="flex:0.8"><label>Punto N°</label><input class="cr-pto" type="number" placeholder="10"></div>
-              <div class="cfield"><label>Z proyecto (m)</label><input class="cr-zp" type="number" placeholder="396.800" step="0.001"></div>
+              <div class="cfield" style="flex:0.8"><label for="cr-pto">Punto N°</label><input id="cr-pto" class="cr-pto" type="number" placeholder="10"></div>
+              <div class="cfield"><label for="cr-zp">Z proyecto (m)</label><input id="cr-zp" class="cr-zp" type="number" placeholder="396.800" step="0.001"></div>
               <button class="cbtn-sec cr-del" style="padding:5px 8px;align-self:flex-end;">✕</button>
             </div>
           </div>

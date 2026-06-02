@@ -23,6 +23,7 @@ if (!isset($_SESSION['usuario_id'])) {
 $usuarioId     = $_SESSION['usuario_id'];
 $usuarioNombre = $_SESSION['usuario_nombre'] ?? 'Usuario';
 $usuarioPlan   = $_SESSION['usuario_plan']   ?? 'free';
+$esPremium     = $usuarioPlan === 'premium';
 
 /* ── Si viene ?proyecto=ID, cargar CSV desde DB ── */
 $proyDB = null;
@@ -409,13 +410,13 @@ textarea.inp{resize:vertical;min-height:48px;font-size:10px;line-height:1.6;}
   background:linear-gradient(90deg,transparent,rgba(0,229,192,.4),transparent);
 }
 .totbar.recalculating{animation:borderGlow 1s ease-in-out 2;}
-.totbar-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
-.ti{display:flex;flex-direction:column;gap:2px;min-width:60px;}
-.ti-l{font-size:8px;color:var(--mut);text-transform:uppercase;letter-spacing:.06em;}
-.ti-v{font:700 12px var(--font-mono);color:var(--txt2);transition:all .3s;}
-.ti-v.big{font-size:16px;color:var(--acc);letter-spacing:-.5px;}
+/* .totbar-row - see above */
+/* .ti - see above */
+/* .ti-l - see above */
+/* .ti-v - see above */
+/* .ti-v.big - see above */
 .ti-v.updated{animation:flipNum .4s cubic-bezier(.34,1.2,.64,1);}
-.tsep{width:1px;height:30px;background:var(--bord);}
+/* .tsep - see above */
 
 /* ── TOTAL grande animado ── */
 .total-highlight{
@@ -436,40 +437,25 @@ textarea.inp{resize:vertical;min-height:48px;font-size:10px;line-height:1.6;}
 }
 .stab.on::after,.mtab.on::after{width:100%;}
 
-/* ── Spane con transición ── */
-.spane{transition:opacity .2s;}
-.spane.on{display:flex;animation:fadeInUp .25s ease-out;}
-.mpane.on{animation:fadeInScale .22s ease-out;}
+/* .spane - see above */
+/* .spane.on - see above */
+/* .mpane.on - see above */
 
-/* ── Factor badge mejorado ── */
-.fac-badge{
-  display:inline-block;padding:2px 8px;border-radius:10px;
-  font:700 9px var(--font-mono);margin-left:6px;
-  transition:all .3s;
-}
+/* .fac-badge - see above */
 .fac-badge.low{background:rgba(34,197,94,.12);color:#4ade80;border:1px solid rgba(34,197,94,.25);}
 .fac-badge.med{background:rgba(245,158,11,.12);color:var(--amb);border:1px solid rgba(245,158,11,.25);}
 .fac-badge.high{background:rgba(239,68,68,.12);color:#f87171;border:1px solid rgba(239,68,68,.25);}
 .fac-badge.extreme{background:rgba(239,68,68,.2);color:#ff4444;border:1px solid rgba(239,68,68,.4);animation:glowPulse 1.5s infinite;}
 
-/* ── APU items con hover mejorado ── */
-.apu-item{
-  display:grid;grid-template-columns:1fr 90px 70px;align-items:center;gap:5px;
-  padding:6px 4px;border-bottom:1px solid rgba(255,255,255,.025);
-  transition:background .15s;border-radius:4px;
-}
+/* .apu-item - see above */
 .apu-item:hover{background:rgba(255,255,255,.025);}
-.apu-item:last-child{border:none;}
-.ai-sub{font:600 10px var(--font-mono);color:var(--txt);text-align:right;transition:all .3s;}
+/* .apu-item:last-child - see above */
+/* .ai-sub - see above */
 .ai-sub.updated{animation:flipNum .35s ease-out;}
 .ai-sub.zero{color:var(--mut);}
 .ai-sub.high{color:var(--acc);}
 
-/* ── CAP headers con total animado ── */
-.apu-sec-sub{
-  font:600 10px var(--font-mono);color:var(--acc);
-  transition:all .3s;
-}
+/* .apu-sec-sub - see above */
 .apu-sec-sub.updated{animation:flipNum .4s ease-out;}
 
 /* ── Resumen mejorado ── */
@@ -478,7 +464,7 @@ textarea.inp{resize:vertical;min-height:48px;font-size:10px;line-height:1.6;}
   background:radial-gradient(circle,rgba(0,229,192,.06),transparent 70%);
   pointer-events:none;
 }
-.rg-val{font:800 28px var(--font-head);color:var(--acc);letter-spacing:-1px;}
+/* .rg-val - see above */
 .rg-val.loading{animation:shimmer 1.4s infinite;background:linear-gradient(90deg,rgba(0,229,192,.2) 25%,rgba(0,229,192,.4) 50%,rgba(0,229,192,.2) 75%);background-size:400px 100%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
 
 /* ── Gráfico de barras de capítulos ── */
@@ -511,64 +497,30 @@ textarea.inp{resize:vertical;min-height:48px;font-size:10px;line-height:1.6;}
 .btn-calcular:active{transform:scale(.98);}
 .btn-calcular.loading{background:rgba(0,229,192,.4);cursor:not-allowed;}
 
-/* ── KPI cards mejoradas ── */
-.kpi{
-  padding:10px 12px;border-right:1px solid var(--bord);
-  transition:background .2s;
-}
-.kpi:last-child{border-right:none;}
+/* .kpi - see above */
+/* .kpi:last-child - see above */
 .kpi:hover{background:rgba(255,255,255,.02);}
-.kpi-v{font:700 14px var(--font-mono);color:var(--acc);transition:all .3s;}
-.kpi-l{font-size:9px;color:var(--mut);margin-top:3px;}
+/* .kpi-v - see above */
+/* .kpi-l - see above */
 
-/* ── Input focus mejorado ── */
-.ai-inp{
-  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);
-  color:var(--txt);border-radius:4px;padding:4px 6px;font:10px var(--font-mono);
-  text-align:right;transition:all .2s;
-}
-.ai-inp:focus{
-  outline:none;border-color:rgba(0,229,192,.5);
-  background:rgba(0,229,192,.06);
-  box-shadow:0 0 0 3px rgba(0,229,192,.08);
-}
+/* .ai-inp - see above */
+/* .ai-inp:focus - see above */
 
-/* ── Proy card con accent line ── */
-.proy-card{
-  padding:12px 14px;border-bottom:1px solid var(--bord);
-  background:linear-gradient(135deg,rgba(0,229,192,.04),transparent);
-  position:relative;overflow:hidden;
-}
+/* .proy-card - see above */
 .proy-card::before{
   content:'';position:absolute;left:0;top:0;bottom:0;width:3px;
   background:linear-gradient(to bottom,var(--acc),rgba(0,229,192,.2));
 }
 
-/* ── Items de cotización con animación ── */
-.apu-sec{
-  margin-bottom:14px;
-  animation:slideInLeft .3s ease-out;
-}
-.apu-hdr{
-  display:flex;align-items:center;gap:7px;margin-bottom:8px;
-  padding-bottom:7px;border-bottom:1px solid var(--bord);
-}
-.apu-num{
-  width:22px;height:22px;border-radius:5px;background:var(--acc-dim);
-  border:1px solid rgba(0,229,192,.2);display:flex;align-items:center;
-  justify-content:center;font:700 9px var(--font-mono);color:var(--acc);flex-shrink:0;
-  transition:all .2s;
-}
+/* .apu-sec - see above */
+/* .apu-hdr - see above */
+/* .apu-num - see above */
 .apu-sec:hover .apu-num{background:rgba(0,229,192,.2);transform:scale(1.05);}
-.apu-sec-name{font:700 11px var(--font-head);color:var(--txt);flex:1;letter-spacing:.02em;}
+/* .apu-sec-name - see above */
 
-/* ── Zona badge con estado ── */
-.sec-badge{
-  font-size:9px;border-radius:10px;padding:3px 10px;
-  transition:all .3s;font-family:var(--font-mono);font-weight:600;
-}
+/* .sec-badge - see above */
 .sec-badge.default{background:rgba(245,158,11,.08);color:var(--amb);border:1px solid rgba(245,158,11,.2);}
-.sec-badge.ok{background:var(--acc-dim);color:var(--acc);border:1px solid rgba(0,229,192,.3);animation:popIn .4s ease-out;}
+/* .sec-badge.ok - see above */
 
 /* ── Botón guardar cotización ── */
 .btn-guardar-cot{
@@ -591,25 +543,14 @@ textarea.inp{resize:vertical;min-height:48px;font-size:10px;line-height:1.6;}
   vertical-align:middle;
 }
 
-/* ── Panel resumen chapítulos mejorado ── */
-.rcard{
-  background:var(--surf);border:1px solid var(--bord);border-radius:10px;
-  overflow:hidden;transition:border-color .2s;
-  animation:fadeInScale .3s ease-out;
-}
+/* .rcard - see above */
 .rcard:hover{border-color:rgba(0,229,192,.15);}
-.rcard-title{
-  padding:8px 14px;background:rgba(0,229,192,.04);
-  border-bottom:1px solid var(--bord);
-  font:600 9px var(--font-head);color:var(--acc);
-  text-transform:uppercase;letter-spacing:.07em;
-  display:flex;align-items:center;gap:6px;
-}
-.rrow{display:flex;justify-content:space-between;padding:6px 14px;border-bottom:1px solid rgba(255,255,255,.025);font-size:10px;transition:background .15s;}
+/* .rcard-title - see above */
+/* .rrow - see above */
 .rrow:hover{background:rgba(255,255,255,.02);}
-.rrow:last-child{border:none;}
-.rl{color:var(--mut);}
-.rv{font-family:var(--font-mono);font-size:10px;font-weight:600;color:var(--txt2);}
+/* .rrow:last-child - see above */
+/* .rl - see above */
+/* .rv - see above */
 
 /* ══ PRINT ══ */
 @media print{
@@ -838,7 +779,7 @@ textarea.inp{resize:vertical;min-height:48px;font-size:10px;line-height:1.6;}
 
       <!-- Parámetros volumétricos -->
       <div class="apu-sec" style="margin-bottom:6px;">
-        <div role="button" tabindex="0" class="apu-hdr" style="cursor:pointer;" onkeydown="if(event.key==='Enter'||event.key===' ')this.click()" onclick="this.nextElementSibling.classList.toggle('hidden')">
+        <button class="apu-hdr" style="cursor:pointer;" onkeydown="if(event.key==='Enter'||event.key===' ')this.click()" onclick="this.nextElementSibling.classList.toggle('hidden')">
           <div class="apu-num" style="background:var(--acc-dim);color:var(--acc);">⚙</div>
           <span class="apu-sec-name">Parámetros volumétricos</span>
           <span class="apu-sec-sub" style="font-size:9px;">▾</span>
@@ -867,7 +808,7 @@ textarea.inp{resize:vertical;min-height:48px;font-size:10px;line-height:1.6;}
 
       <!-- AIU desglosado -->
       <div class="apu-sec" style="margin-bottom:6px;">
-        <div role="button" tabindex="0" class="apu-hdr" style="cursor:pointer;" onkeydown="if(event.key==='Enter'||event.key===' ')this.click()" onclick="this.nextElementSibling.classList.toggle('hidden')">
+        <button class="apu-hdr" style="cursor:pointer;" onkeydown="if(event.key==='Enter'||event.key===' ')this.click()" onclick="this.nextElementSibling.classList.toggle('hidden')">
           <div class="apu-num" style="background:rgba(99,102,241,.15);color:#818cf8;">AIU</div>
           <span class="apu-sec-name">A + I + U</span>
           <span class="apu-sec-sub" id="bAIUpct" style="font-size:9px;color:#818cf8;">15+5+10%</span>

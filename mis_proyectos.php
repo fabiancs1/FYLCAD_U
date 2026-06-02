@@ -292,7 +292,7 @@ function fmtFecha($f) { return date('d/m/Y', strtotime($f)); }
                class="page-btn <?= $pagina <= 1 ? 'disabled' : '' ?>">← Anterior</a>
             <?php for ($i = max(1,$pagina-2); $i <= min($totalPaginas,$pagina+2); $i++): ?>
             <a href="?p=<?= $i ?>&q=<?= urlencode($busqueda) ?>&orden=<?= htmlspecialchars($orden) ?>"
-               class="page-btn <?= $i === $pagina ? 'active' : '' ?>"><?= $i ?></a>
+               class="page-btn <?= $i === $pagina ? 'active' : '' ?>" aria-label="Página <?= $i ?>"><?= $i ?></a>
             <?php endfor; ?>
             <a href="?p=<?= $pagina+1 ?>&q=<?= urlencode($busqueda) ?>&orden=<?= htmlspecialchars($orden) ?>"
                class="page-btn <?= $pagina >= $totalPaginas ? 'disabled' : '' ?>">Siguiente →</a>

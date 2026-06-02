@@ -997,8 +997,8 @@ $xpPct = $xpSig > 0 ? min(100, round(($xp - $nivelActual[2]) / ($xpSig - $nivelA
                 <form method="POST">
                     <input type="hidden" name="accion" value="nombre">
                     <div class="form-field">
-                        <label>Nombre completo</label>
-                        <input type="text" name="nombre"
+                        <label for="nombre">Nombre completo</label>
+                        <input type="text" id="nombre" name="nombre"
                                value="<?= htmlspecialchars($usuario['nombre']) ?>"
                                required minlength="2" maxlength="100">
                     </div>
@@ -1026,16 +1026,16 @@ $xpPct = $xpSig > 0 ? min(100, round(($xp - $nivelActual[2]) / ($xpSig - $nivelA
                 <form method="POST">
                     <input type="hidden" name="accion" value="password">
                     <div class="form-field">
-                        <label>Contraseña actual</label>
-                        <input type="password" name="password_actual" required>
+                        <label for="password_actual">Contraseña actual</label>
+                        <input type="password" id="password_actual" name="password_actual" required>
                     </div>
                     <div class="form-field">
-                        <label>Nueva contraseña</label>
-                        <input type="password" name="password_nueva" required minlength="8" placeholder="Mínimo 8 caracteres">
+                        <label for="password_nueva">Nueva contraseña</label>
+                        <input type="password" id="password_nueva" name="password_nueva" required minlength="8" placeholder="Mínimo 8 caracteres">
                     </div>
                     <div class="form-field">
-                        <label>Confirmar nueva contraseña</label>
-                        <input type="password" name="password_confirmar" required>
+                        <label for="password_confirmar">Confirmar nueva contraseña</label>
+                        <input type="password" id="password_confirmar" name="password_confirmar" required>
                     </div>
                     <button type="submit" class="btn-save">Actualizar contraseña</button>
                 </form>

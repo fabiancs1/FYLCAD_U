@@ -49,7 +49,7 @@
     border-radius: 50%;
     font-size: 10px;
     font-weight: 700;
-    color: white;
+    color: #ffffff;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -165,7 +165,7 @@
 
 #fylbot-close:hover {
     color: #ffffff;
-    background: rgba(255,255,255,0.15);
+    background: rgba(255,255,255,0.2);
 }
 
 /* ── Mensajes ── */
@@ -311,7 +311,7 @@
 .fylbot-sugerencia:hover {
     background: rgba(124, 58, 237, 0.15);
     border-color: #7c3aed;
-    color: #ddd6fe;
+    color: #ede9fe;
     transform: translateY(-1px);
 }
 

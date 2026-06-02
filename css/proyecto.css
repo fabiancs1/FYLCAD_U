@@ -905,10 +905,10 @@ canvas:active { cursor:grabbing; }
 .pt-uso  { font-size: 10px; color: var(--muted); text-align: right; }
 
 /* Badge estados de pendiente */
-.pend-badge.tb-plano     { background: rgba(34,197,94,.15);  color: #4ade80; border: 1px solid rgba(34,197,94,.3); }
-.pend-badge.tb-ondulado  { background: rgba(251,191,36,.15); color: #fcd34d; border: 1px solid rgba(251,191,36,.3); }
-.pend-badge.tb-quebrado  { background: rgba(249,115,22,.15); color: #fb923c; border: 1px solid rgba(249,115,22,.3); }
-.pend-badge.tb-escarpado { background: rgba(239,68,68,.15);  color: #f87171; border: 1px solid rgba(239,68,68,.3); }
+.pend-badge.tb-plano     { background: rgba(34,197,94,.15);  color: #86efac; border: 1px solid rgba(34,197,94,.3); }
+.pend-badge.tb-ondulado  { background: rgba(251,191,36,.15); color: #fde68a; border: 1px solid rgba(251,191,36,.3); }
+.pend-badge.tb-quebrado  { background: rgba(249,115,22,.15); color: #fdba74; border: 1px solid rgba(249,115,22,.3); }
+.pend-badge.tb-escarpado { background: rgba(239,68,68,.15);  color: #fca5a5; border: 1px solid rgba(239,68,68,.3); }
 
 /* KPI grid — métricas */
 .kpi-grid {
@@ -925,9 +925,9 @@ canvas:active { cursor:grabbing; }
 .kpi-val  { font: 700 17px 'DM Mono',monospace; line-height: 1.1; }
 .kpi-lbl  { font-size: 9px; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; text-align: center; }
 .kpi-blue  .kpi-val { color: #60a5fa; }
-.kpi-teal  .kpi-val { color: #00e5c0; }
+.kpi-teal  .kpi-val { color: #5eead4; }
 .kpi-amber .kpi-val { color: #fbbf24; }
-.kpi-red   .kpi-val { color: #f87171; }
+.kpi-red   .kpi-val { color: #fca5a5; }
 
 /* Terrain badge bar */
 .terrain-badge-bar {
@@ -938,12 +938,12 @@ canvas:active { cursor:grabbing; }
 .terrain-badge-label { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; }
 .terrain-badge {
     font: 700 10px 'DM Mono',monospace; padding: 3px 10px; border-radius: 20px;
-    background: rgba(0,229,192,.12); color: #00e5c0; border: 1px solid rgba(0,229,192,.25);
+    background: rgba(0,229,192,.12); color: #5eead4; border: 1px solid rgba(0,229,192,.25);
 }
-.terrain-badge.tb-plano     { background: rgba(34,197,94,.12);  color: #4ade80; border-color: rgba(34,197,94,.25); }
-.terrain-badge.tb-ondulado  { background: rgba(251,191,36,.12); color: #fcd34d; border-color: rgba(251,191,36,.25); }
-.terrain-badge.tb-quebrado  { background: rgba(249,115,22,.12); color: #fb923c; border-color: rgba(249,115,22,.25); }
-.terrain-badge.tb-escarpado { background: rgba(239,68,68,.12);  color: #f87171; border-color: rgba(239,68,68,.25); }
+.terrain-badge.tb-plano     { background: rgba(34,197,94,.12);  color: #86efac; border-color: rgba(34,197,94,.25); }
+.terrain-badge.tb-ondulado  { background: rgba(251,191,36,.12); color: #fde68a; border-color: rgba(251,191,36,.25); }
+.terrain-badge.tb-quebrado  { background: rgba(249,115,22,.12); color: #fdba74; border-color: rgba(249,115,22,.25); }
+.terrain-badge.tb-escarpado { background: rgba(239,68,68,.12);  color: #fca5a5; border-color: rgba(239,68,68,.25); }
 
 /* Barra de elevación */
 .elev-bar-wrap { padding: 10px 14px 4px; }
@@ -976,7 +976,7 @@ canvas:active { cursor:grabbing; }
 }
 .msec-sep  { width: 1px; background: rgba(255,255,255,.06); }
 .msec-ico  { font-size: 11px; opacity: .4; }
-.msec-val  { font: 600 10px 'DM Mono',monospace; color: #00e5c0; }
+.msec-val  { font: 600 10px 'DM Mono',monospace; color: #5eead4; }
 .msec-lbl  { font-size: 8px; color: var(--muted); text-align: center; }
 
 /* ─── Cotización rediseñada ─── */
@@ -1000,7 +1000,7 @@ canvas:active { cursor:grabbing; }
     border: 1px solid rgba(255,255,255,.07); border-radius: 5px;
 }
 .cot-cant-lbl  { display: block; font-size: 9px; color: var(--muted); }
-.cot-cant-val  { display: block; font: 700 12px 'DM Mono',monospace; color: #00e5c0; }
+.cot-cant-val  { display: block; font: 700 12px 'DM Mono',monospace; color: #5eead4; }
 .cot-cant-unit { display: block; font-size: 8px; color: var(--muted2); }
 
 .cot-capitulo { border-bottom: 1px solid rgba(255,255,255,.06); }
@@ -1010,12 +1010,12 @@ canvas:active { cursor:grabbing; }
 }
 .cot-cap-header:hover { background: rgba(255,255,255,.03); }
 .cot-cap-num {
-    font: 700 10px 'DM Mono',monospace; color: #00e5c0;
+    font: 700 10px 'DM Mono',monospace; color: #5eead4;
     background: rgba(0,229,192,.1); border: 1px solid rgba(0,229,192,.2);
     padding: 2px 6px; border-radius: 3px; flex-shrink: 0;
 }
 .cot-cap-title { font-size: 12px; font-weight: 600; color: var(--text); flex: 1; }
-.cot-cap-sub   { font: 600 11px 'DM Mono',monospace; color: #00e5c0; opacity: .7; font-size: 10px; }
+.cot-cap-sub   { font: 600 11px 'DM Mono',monospace; color: #5eead4; opacity: .7; font-size: 10px; }
 .cot-cap-arrow { font-size: 11px; color: var(--muted); transition: transform .2s; }
 .cot-cap-header.collapsed .cot-cap-arrow { transform: rotate(-90deg); }
 .cot-cap-body  { padding: 4px 14px 8px; }
@@ -1056,7 +1056,7 @@ canvas:active { cursor:grabbing; }
     font-size: 10px; color: var(--muted); text-transform: uppercase;
     letter-spacing: .1em; margin-bottom: 5px;
 }
-.cot-grand-val { font: 700 26px 'Syne',sans-serif; color: #00e5c0; letter-spacing: -.01em; }
+.cot-grand-val { font: 700 26px 'Syne',sans-serif; color: #5eead4; letter-spacing: -.01em; }
 .cot-grand-alt { font-size: 11px; color: var(--muted); margin-top: 4px; }
 
 .cot-efic-row {
@@ -1084,7 +1084,7 @@ canvas:active { cursor:grabbing; }
   flex: 1; text-align: center; display: flex; flex-direction: column; gap: 2px;
 }
 .cot-link-stat span:first-child {
-  font: 700 14px 'DM Mono',monospace; color: #00e5c0;
+  font: 700 14px 'DM Mono',monospace; color: #5eead4;
 }
 .cot-link-stat span:last-child {
   font-size: 9px; color: var(--muted);
@@ -1106,7 +1106,7 @@ canvas:active { cursor:grabbing; }
 .btn-cot-text { flex: 1; display: flex; flex-direction: column; gap: 2px; }
 .btn-cot-text span { font: 700 13px 'Syne',sans-serif; color: #e8edf5; }
 .btn-cot-text small { font-size: 10px; color: var(--muted); }
-.btn-cot-arrow { font-size: 18px; color: #00e5c0; opacity: .7; }
+.btn-cot-arrow { font-size: 18px; color: #5eead4; opacity: .7; }
 .cot-link-note {
   text-align: center; font-size: 10px; color: var(--muted2);
   margin-top: 8px; font-style: italic;
