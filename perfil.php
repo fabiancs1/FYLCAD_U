@@ -1003,14 +1003,14 @@ $xpPct = $xpSig > 0 ? min(100, round(($xp - $nivelActual[2]) / ($xpSig - $nivelA
                                required minlength="2" maxlength="100">
                     </div>
                     <div class="form-field">
-                        <label>Correo electrónico</label>
-                        <input type="email" value="<?= htmlspecialchars($usuario['email']) ?>" disabled>
-                        <small>El email no se puede modificar.</small>
-                    </div>
-                    <div class="form-field">
-                        <label>Miembro desde</label>
-                        <input type="text" value="<?= date('d \d\e F \d\e Y', strtotime($usuario['creado_en'])) ?>" disabled>
-                    </div>
+                     <label for="campo_email">Correo electrónico</label>
+                      <input type="email" id="campo_email" value="<?= htmlspecialchars($usuario['email']) ?>" disabled>
+                     <small>El email no se puede modificar.</small>
+                   </div>
+             <div class="form-field">
+               <label for="campo_desde">Miembro desde</label>
+                  <input type="text" id="campo_desde" value="<?= date('d \d\e F \d\e Y', strtotime($usuario['creado_en'])) ?>" disabled>
+                     </div>
                     <button type="submit" class="btn-save">Guardar cambios</button>
                 </form>
             </div>
