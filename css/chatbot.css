@@ -164,9 +164,8 @@
 }
 
 #fylbot-close:hover {
-    color: #ffffff;
-    background: rgba(255,255,255,0.25);
     color: #f8fafc;
+    background: rgba(255,255,255,0.25);
 }
 
 /* ── Mensajes ── */
