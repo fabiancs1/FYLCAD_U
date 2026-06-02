@@ -35,7 +35,7 @@ Plataforma SaaS de topografía digital que permite:
   Repositorio: https://github.com/fabiancs1/FYLCAD_U
 Análisis de calidad: https://sonarcloud.io/project/overview?id=fabiancs1_FYLCAD
 
-Requisitos Previos
+## Requisitos Previos
 
 PHP 8.1+ con extensiones pdo, pdo_mysql, curl y sockets
 MySQL 8.0+
@@ -44,7 +44,8 @@ XAMPP o Laragon para entorno local
 
 No requiere Composer ni npm.
 
-Instalación
+## Instalación
+
 1. Clonar el repositorio
 git clone https://github.com/fabiancs1/FYLCAD_U.git}
 2. Importar la base de datos
